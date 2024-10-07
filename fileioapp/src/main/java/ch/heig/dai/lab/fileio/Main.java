@@ -3,7 +3,7 @@ package ch.heig.dai.lab.fileio;
 import java.io.File;
 
 // *** TODO: Change this to import your own package ***
-import ch.heig.dai.lab.fileio.jehrensb.*;
+
 
 public class Main {
     // *** TODO: Change this to your own name ***
