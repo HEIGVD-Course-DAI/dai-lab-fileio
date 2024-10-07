@@ -1,4 +1,4 @@
-package ch.heig.dai.lab.fileio.LovIMarK;
+package ch.heig.dai.lab.fileio.jehrensb;
 
 public class Transformer {
 
