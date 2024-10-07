@@ -1,4 +1,4 @@
-package ch.heig.dai.lab.fileio.jehrensb;
+package ch.heig.dai.lab.fileio.LovIMarK;
 
 import java.io.File;
 import java.nio.charset.Charset;
