@@ -23,8 +23,11 @@ public class Transformer {
      * @return the transformed string
      */
     public String replaceChuck(String source) {
-        // TODO: Implement the method body here.
-        return "";
+        if(source.contains("Chuck Norris"))
+        {
+            return source.replace("Chuck Norris",newName);
+        }
+        return source;
     }
 
     /**
@@ -33,8 +36,26 @@ public class Transformer {
      * @return the transformed string
      */
     public String capitalizeWords(String source) {
-        // TODO: Implement the method body here.
-        return "";
+        String[] words = source.split(" ");
+
+        StringBuilder capitalized = new StringBuilder();
+
+        // Loop through each word in the array.
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                // Extract the first letter and capitalize it.
+                String firstLetter = word.substring(0, 1).toUpperCase();
+
+                // Extract the rest of the word and convert it to lowercase.
+                String restOfWord = word.substring(1).toLowerCase();
+
+                // Append the capitalized word to the StringBuilder.
+                capitalized.append(firstLetter).append(restOfWord).append(" ");
+            }
+        }
+
+        // Return the result as a string, trimming the extra space at the end.
+        return capitalized.toString().trim();
     }
 
     /**
@@ -44,8 +65,41 @@ public class Transformer {
      * @return the transformed string
      */
     public String wrapAndNumberLines(String source) {
-        // TODO: Implement the method body here.
-        // Use the StringBuilder class to build the result string.
-        return "";
+        String[] words = source.split(" ");
+
+        // StringBuilder to build the result
+        StringBuilder wrappedText = new StringBuilder();
+
+        int wordCount = 0;
+        int lineNumber = 1;
+
+        // Append the first line number
+        wrappedText.append(lineNumber).append(". ");
+
+        // Loop through the array of words
+        for (String word : words) {
+            if (wordCount == numWordsPerLine) {
+                // If we reach the word limit per line, append a new line and line number
+                wrappedText.append("\n");
+                lineNumber++;
+                wrappedText.append(lineNumber).append(". ");
+                wordCount = 0;
+            }
+
+            // Append the word to the current line
+            wrappedText.append(word);
+            wordCount++;
+
+            // Only append a space if this is not the last word in the list
+            if (!(wordCount == numWordsPerLine || word.equals(words[words.length - 1]))) {
+                wrappedText.append(" ");
+            }
+        }
+
+        // Ensure the final string ends with a newline
+        wrappedText.append("\n");
+
+        // Convert StringBuilder to string and return the result
+        return wrappedText.toString();
     }
 }   
