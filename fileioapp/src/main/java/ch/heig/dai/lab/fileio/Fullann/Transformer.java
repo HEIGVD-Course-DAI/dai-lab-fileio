@@ -23,8 +23,8 @@ public class Transformer {
      * @return the transformed string
      */
     public String replaceChuck(String source) {
-        // TODO: Implement the method body here.
-        return "";
+        // Replace all instances of "Chuck Norris" with the provided newName
+        return source.replace("Chuck Norris", newName);
     }
 
     /**
@@ -33,8 +33,19 @@ public class Transformer {
      * @return the transformed string
      */
     public String capitalizeWords(String source) {
-        // TODO: Implement the method body here.
-        return "";
+        // Split the string into words
+        String[] words = source.split("\\s+");
+        StringBuilder capitalized = new StringBuilder();
+
+        // Iterate over each word and capitalize the first letter
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                capitalized.append(Character.toUpperCase(word.charAt(0)))
+                        .append(word.substring(1).toLowerCase()).append(" ");
+            }
+        }
+        // Remove the last extra space and return the result
+        return capitalized.toString().trim();
     }
 
     /**
@@ -44,8 +55,28 @@ public class Transformer {
      * @return the transformed string
      */
     public String wrapAndNumberLines(String source) {
-        // TODO: Implement the method body here.
-        // Use the StringBuilder class to build the result string.
-        return "";
+        // Split the source text into individual words
+        String[] words = source.split("\\s+");
+        StringBuilder wrapped = new StringBuilder();
+
+        int wordCount = 0;
+        int lineNumber = 1;
+
+        wrapped.append(lineNumber++).append(". ");  // Start with line 1
+
+        // Iterate over each word and add them to the output
+        for (String word : words) {
+            wrapped.append(word).append(" ");
+            wordCount++;
+
+            // If the number of words per line is reached, wrap to the next line
+            if (wordCount == numWordsPerLine) {
+                wrapped.append(System.lineSeparator())
+                        .append(lineNumber++).append(". ");  // Start a new numbered line
+                wordCount = 0;
+            }
+        }
+
+        return wrapped.toString().trim();  // Return the result with no trailing spaces
     }
-}   
+}
