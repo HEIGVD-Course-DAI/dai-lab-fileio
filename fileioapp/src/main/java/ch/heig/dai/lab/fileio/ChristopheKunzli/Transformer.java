@@ -23,20 +23,7 @@ public class Transformer {
      * @return the transformed string
      */
     public String replaceChuck(String source) {
-        StringBuilder transformed = new StringBuilder();
-        String[] words = source.split(" ");
-        for (int i = 0; i < words.length; ++i) {
-            if (i < words.length - 1 && words[i].equals("Chuck") && words[i + 1].equals("Norris")) {
-                transformed.append(newName);
-                ++i;
-            } else {
-                transformed.append(words[i]);
-            }
-            if (i < words.length - 1) {
-                transformed.append(" ");
-            }
-        }
-        return transformed.toString();
+        return source.replace("Chuck Norris", newName);
     }
 
     /**
