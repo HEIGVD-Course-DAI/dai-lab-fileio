@@ -22,9 +22,9 @@ public class Transformer {
      * @param source the string to transform
      * @return the transformed string
      */
-    public String replaceChuck(String source) {
-        // TODO: Implement the method body here.
-        return "";
+    public String replaceChuck(String source) 
+    {
+        return source.replace("Chuck Norris", this.newName);
     }
 
     /**
@@ -32,9 +32,16 @@ public class Transformer {
      * @param source the string to transform
      * @return the transformed string
      */
-    public String capitalizeWords(String source) {
-        // TODO: Implement the method body here.
-        return "";
+    public String capitalizeWords(String source)
+    {
+        String[] words = source.split(" ");
+
+        // Capitalize only the first letter of each word
+        for (int i = 0; i < words.length; i++)
+            words[i] = words[i].substring(0, 1).toUpperCase() + words[i].substring(1);
+        
+
+        return String.join(" ", words);
     }
 
     /**
@@ -43,9 +50,42 @@ public class Transformer {
      * @param source the string to transform
      * @return the transformed string
      */
-    public String wrapAndNumberLines(String source) {
-        // TODO: Implement the method body here.
-        // Use the StringBuilder class to build the result string.
-        return "";
+    public String wrapAndNumberLines(String source) 
+    {
+        String[] words = source.split(" ");
+        StringBuilder result = new StringBuilder();
+        int lineNumber = 1;
+        int wordCount = 0;
+        
+        for (String word : words) 
+        {
+            // each time wordCount is 0, add the number of the line
+            if (wordCount == 0) 
+            {
+                result.append(lineNumber);
+                result.append(". ");
+                lineNumber++;
+            }
+
+            result.append(word);
+            wordCount++;
+        
+            // If the max words per line has been reached, go to the next line
+            if (wordCount >= this.numWordsPerLine)
+            {
+                result.append("\n");
+                wordCount = 0;
+            }
+            else if (word != words[words.length - 1])
+                result.append(" ");
+            // adding last \n because of tests
+            else
+                result.append("\n");
+
+
+
+        }
+        
+        return result.toString();
     }
 }   
