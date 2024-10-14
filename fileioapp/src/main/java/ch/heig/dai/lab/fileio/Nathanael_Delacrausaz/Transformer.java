@@ -23,8 +23,7 @@ public class Transformer {
      * @return the transformed string
      */
     public String replaceChuck(String source) {
-        // TODO: Implement the method body here.
-        return "";
+        return source.replaceAll("Chuck Norris", newName);
     }
 
     /**
@@ -33,8 +32,17 @@ public class Transformer {
      * @return the transformed string
      */
     public String capitalizeWords(String source) {
-        // TODO: Implement the method body here.
-        return "";
+        String[] words = source.split("\\s+");  
+        StringBuilder capitalized = new StringBuilder();
+
+        for (String word : words) {
+            if (word.length() > 0) {
+                capitalized.append(Character.toUpperCase(word.charAt(0)))
+                           .append(word.substring(1).toLowerCase()).append(" ");
+            }
+        }
+
+        return capitalized.toString().trim();
     }
 
     /**
@@ -44,8 +52,30 @@ public class Transformer {
      * @return the transformed string
      */
     public String wrapAndNumberLines(String source) {
-        // TODO: Implement the method body here.
-        // Use the StringBuilder class to build the result string.
-        return "";
+        String[] words = source.split("\\s+");
+        StringBuilder result = new StringBuilder();
+        int wordCount = 0;
+        int lineNumber = 1;
+    
+        result.append(lineNumber).append(". ");
+
+        for (int i = 0; i < words.length; i++) {
+            result.append(words[i]);
+            wordCount++;
+            
+            // If it's not the last word in the line, add a space
+            if (wordCount < numWordsPerLine && i < words.length - 1) {
+                result.append(" ");
+            }
+
+            if (wordCount == numWordsPerLine && i < words.length - 1) {
+                wordCount = 0;
+                result.append("\n").append(++lineNumber).append(". ");
+            }
+        }
+        result.append("\n");
+    
+        return result.toString();
     }
-}   
+    
+}
