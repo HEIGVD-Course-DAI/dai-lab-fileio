@@ -66,7 +66,7 @@ public class Transformer {
             return source;
         }
     
-        String[] words = source.split("\\s+");
+        String[] words = source.split(" ");
         StringBuilder result = new StringBuilder();
         int wordCount = 0;
         int lineNumber = 1;
@@ -85,7 +85,7 @@ public class Transformer {
             wordCount++;
         }
     
-        return result.toString().trim();
+        return result.toString().trim() + "\n";
     }
     
 }   
