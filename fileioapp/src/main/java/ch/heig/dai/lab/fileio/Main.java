@@ -27,6 +27,7 @@ public class Main {
             System.exit(1);
         }
         String folder = args[0];
+        String filenameExt = ".processed";
         int wordsPerLine = Integer.parseInt(args[1]);
         System.out.println("Application started, reading folder " + folder + "...");
         FileExplorer folderInCheck = new FileExplorer(folder);
@@ -51,7 +52,7 @@ public class Main {
              sourceContent = transformer.replaceChuck(sourceContent);
              sourceContent = transformer.capitalizeWords(sourceContent);
              sourceContent =  transformer.wrapAndNumberLines(sourceContent);
-             File targetFile = new File(fileInCheck.getAbsolutePath()+".processed");
+             File targetFile = new File(fileInCheck.getAbsolutePath()+filenameExt);
              stream.writeFile(targetFile, sourceContent, Charset.forName("UTF8"));
             } catch (Exception e) {
                 System.out.println("Exception: " + e);
