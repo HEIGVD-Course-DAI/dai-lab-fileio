@@ -57,7 +57,11 @@ public class Main {
 
                 //write transformed file
                 String outputFileName = folder + "/" + file.getName() + ".processed";
-                fileReaderWriter.writeFile(new File(outputFileName), wrapped, StandardCharsets.UTF_8);
+                if (fileReaderWriter.writeFile(new File(outputFileName), wrapped, StandardCharsets.UTF_8)) {
+                    System.out.println("file successfully written: " + outputFileName);
+                } else {
+                    System.out.println("error while writing: " + outputFileName);
+                }
             } catch (Exception e) {
                 System.out.println("Exception: " + e);
             }
