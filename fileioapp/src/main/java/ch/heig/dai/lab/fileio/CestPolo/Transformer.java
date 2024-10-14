@@ -1,4 +1,4 @@
-package ch.heig.dai.lab.fileio.cestpolo;
+package ch.heig.dai.lab.fileio.CestPolo;
 
 public class Transformer {
 

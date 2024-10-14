@@ -23,8 +23,7 @@ public class Transformer {
      * @return the transformed string
      */
     public String replaceChuck(String source) {
-        // TODO: Implement the method body here.
-        return "";
+        return source.replace("Chuck Norris", newName);
     }
 
     /**
@@ -33,9 +32,13 @@ public class Transformer {
      * @return the transformed string
      */
     public String capitalizeWords(String source) {
-        // TODO: Implement the method body here.
-        return "";
-    }
+        String[] result = source.split(" ");
+        for (int i = 0; i < result.length; i++) {
+            if (result[i].length() > 0) 
+            result[i] = result[i].substring(0, 1).toUpperCase() + result[i].substring(1);
+        }
+        return String.join(" ", result);
+    }    
 
     /**
      * Wrap the text so that there are at most numWordsPerLine words per line.
@@ -44,8 +47,16 @@ public class Transformer {
      * @return the transformed string
      */
     public String wrapAndNumberLines(String source) {
-        // TODO: Implement the method body here.
-        // Use the StringBuilder class to build the result string.
-        return "";
+        String[] result = source.split(" ");
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < result.length; i++) {
+            if (i % numWordsPerLine == 0) {
+                if (i > 0) sb.append("\n");
+                sb.append((i / numWordsPerLine) + 1).append( ". ");
+            }
+            else sb.append(" ");
+            sb.append(result[i]);
+        }
+        return sb.append("\n").toString();
     }
-}   
+}

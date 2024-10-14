@@ -2,6 +2,8 @@ package ch.heig.dai.lab.fileio.VinchXVI;
 
 import java.io.File;
 import java.util.HashSet;
+import java.util.*;
+import java.util.stream.*;
 
 public class FileExplorer {
     private final File folder;
@@ -26,6 +28,16 @@ public class FileExplorer {
      */
     public File getNewFile() {
         // TODO: implement the method body here
+        java.io.File[] listFiles = this.folder.listFiles();
+
+        for( File f : listFiles )
+            if(this.knownFiles.contains(f)) continue;
+            else{
+                this.knownFiles.add(f);
+                return f;
+            }
+
+
         return null;
     }
 }

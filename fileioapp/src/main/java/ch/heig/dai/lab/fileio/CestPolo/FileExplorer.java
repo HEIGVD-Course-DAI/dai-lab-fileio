@@ -1,4 +1,4 @@
-package ch.heig.dai.lab.fileio.cestpolo;
+package ch.heig.dai.lab.fileio.CestPolo;
 
 import java.io.File;
 import java.util.HashSet;
@@ -25,7 +25,15 @@ public class FileExplorer {
      * @return a new file, or null if there is no new file
      */
     public File getNewFile() {
-        // TODO: implement the method body here
+        File[] files = folder.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (!knownFiles.contains(file)) {
+                    knownFiles.add(file);
+                    return file;
+                }
+            }
+        }
         return null;
     }
 }

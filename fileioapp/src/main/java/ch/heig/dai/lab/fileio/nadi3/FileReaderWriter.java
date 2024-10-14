@@ -1,6 +1,9 @@
 package ch.heig.dai.lab.fileio.nadi3;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.charset.Charset;
 
 public class FileReaderWriter {
@@ -12,9 +15,18 @@ public class FileReaderWriter {
      * @return the content of the file as a String, or null if an error occurred.
      */
     public String readFile(File file, Charset encoding) {
-        // TODO: Implement the method body here. 
-        // Use the ...Stream and ...Reader classes from the java.io package.
-        // Make sure to close the streams and readers at the end.
+        try (java.io.Reader reader = new FileReader(file, encoding)) {
+            StringBuilder sb = new StringBuilder();
+            int character = reader.read();
+            while (character != -1) {
+                sb.append((char) character);
+                character = reader.read();
+            }
+            reader.close();
+            return sb.toString();
+        } catch (IOException e) {
+            System.out.println("Exception: " + e);
+        }
         return null;
     }
 
@@ -26,9 +38,13 @@ public class FileReaderWriter {
      * @return true if the file was written successfully, false otherwise
      */
     public boolean writeFile(File file, String content, Charset encoding) {
-        // TODO: Implement the method body here. 
-        // Use the ...Stream and ...Reader classes from the java.io package.
-        // Make sure to flush the data and close the streams and readers at the end.
+        try (java.io.Writer writer = new FileWriter(file, encoding)) {
+            writer.write(content);
+            writer.close();
+            return true;
+        } catch (IOException e) {
+            System.out.println("Exception: " + e);
+        }
         return false;
     }
 }

@@ -12,12 +12,26 @@ public class EncodingSelector {
      *   - .txt:     US-ASCII
      *   - .utf16be: UTF-16BE
      *   - .utf16le: UTF-16LE
-     * 
+     *
      * @param file the file to get the encoding from
      * @return the encoding of the file, or null if the extension is not recognized
      */
     public Charset getEncoding(File file) {
-        // TODO: implement the method body here
+        // Get the file name
+        String fileName = file.getName();
+
+        // Check for the different extensions and return the appropriate Charset
+        if (fileName.endsWith(".utf8")) {
+            return Charset.forName("UTF-8");
+        } else if (fileName.endsWith(".txt")) {
+            return Charset.forName("US-ASCII");
+        } else if (fileName.endsWith(".utf16be")) {
+            return Charset.forName("UTF-16BE");
+        } else if (fileName.endsWith(".utf16le")) {
+            return Charset.forName("UTF-16LE");
+        }
+
+        // Return null if the extension is not recognized
         return null;
     }
 }

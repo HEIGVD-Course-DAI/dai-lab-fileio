@@ -1,7 +1,8 @@
-package ch.heig.dai.lab.fileio.cestpolo;
+package ch.heig.dai.lab.fileio.CestPolo;
 
 import java.io.File;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 public class EncodingSelector {
 
@@ -17,7 +18,10 @@ public class EncodingSelector {
      * @return the encoding of the file, or null if the extension is not recognized
      */
     public Charset getEncoding(File file) {
-        // TODO: implement the method body here
-        return null;
+        return file.getName().endsWith(".utf8") ? StandardCharsets.UTF_8 :
+               file.getName().endsWith(".txt") ? StandardCharsets.US_ASCII :
+               file.getName().endsWith(".utf16be") ? StandardCharsets.UTF_16BE :
+               file.getName().endsWith(".utf16le") ? StandardCharsets.UTF_16LE :
+               null;
     }
 }

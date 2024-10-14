@@ -7,9 +7,9 @@ public class Transformer {
 
     /**
      * Constructor
-     * Initialize the Transformer with the name to replace "Chuck Norris" with 
+     * Initialize the Transformer with the name to replace "Chuck Norris" with
      * and the number of words per line to use when wrapping the text.
-     * @param newName the name to replace "Chuck Norris" with
+     * @param newName         the name to replace "Chuck Norris" with
      * @param numWordsPerLine the number of words per line to use when wrapping the text
      */
     public Transformer(String newName, int numWordsPerLine) {
@@ -23,8 +23,7 @@ public class Transformer {
      * @return the transformed string
      */
     public String replaceChuck(String source) {
-        // TODO: Implement the method body here.
-        return "";
+        return source.replace("Chuck Norris", newName);
     }
 
     /**
@@ -33,8 +32,11 @@ public class Transformer {
      * @return the transformed string
      */
     public String capitalizeWords(String source) {
-        // TODO: Implement the method body here.
-        return "";
+        String[] words = source.split(" ");
+        for (int i = 0; i < words.length; ++i) {
+            words[i] = words[i].substring(0, 1).toUpperCase() + words[i].substring(1);
+        }
+        return String.join(" ", words);
     }
 
     /**
@@ -44,8 +46,26 @@ public class Transformer {
      * @return the transformed string
      */
     public String wrapAndNumberLines(String source) {
-        // TODO: Implement the method body here.
-        // Use the StringBuilder class to build the result string.
-        return "";
+        if (source.isEmpty()) return "";
+
+        StringBuilder wrapped = new StringBuilder();
+        String[] words = source.split(" ");
+
+        int numberOfLines = words.length / numWordsPerLine + (words.length % numWordsPerLine == 0 ? 0 : 1);
+        for (int i = 0; i < numberOfLines; ++i) {
+            wrapped.append(i + 1).append(". ");
+
+            int startIndex = i * numWordsPerLine;
+            int endIndex = Math.min(startIndex + numWordsPerLine, words.length);
+            for (int j = startIndex; j < endIndex; ++j) {
+                wrapped.append(words[j]);
+                if (j < endIndex - 1) {
+                    wrapped.append(" ");
+                }
+            }
+            wrapped.append("\n");
+        }
+
+        return wrapped.toString();
     }
-}   
+}

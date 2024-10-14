@@ -2,6 +2,7 @@ package ch.heig.dai.lab.fileio.nadi3;
 
 import java.io.File;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 public class EncodingSelector {
 
@@ -17,7 +18,14 @@ public class EncodingSelector {
      * @return the encoding of the file, or null if the extension is not recognized
      */
     public Charset getEncoding(File file) {
-        // TODO: implement the method body here
-        return null;
+        String name = file.getName();
+        String extension = name.substring(name.lastIndexOf(".") + 1);
+        return switch (extension) {
+            case "utf8" -> StandardCharsets.UTF_8;
+            case "txt" -> StandardCharsets.US_ASCII;
+            case "utf16be" -> StandardCharsets.UTF_16BE;
+            case "utf16le" -> StandardCharsets.UTF_16LE;
+            default -> null;
+        };
     }
 }
