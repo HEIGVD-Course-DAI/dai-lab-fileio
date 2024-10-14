@@ -2,12 +2,11 @@ package ch.heig.dai.lab.fileio;
 
 import java.io.File;
 
-// *** TODO: Change this to import your own package ***
-import ch.heig.dai.lab.fileio.jehrensb.*;
+import ch.heig.dai.lab.fileio.svelva.*;
+import java.nio.charset.Charset;
 
 public class Main {
-    // *** TODO: Change this to your own name ***
-    private static final String newName = "Edison";
+    private static final String newName = "Sven Ferreira Silva";
 
     /**
      * Main method to transform files in a folder.
@@ -15,7 +14,7 @@ public class Main {
      * In an infinite loop, get a new file from the FileExplorer, determine its encoding with the EncodingSelector,
      * read the file with the FileReaderWriter, transform the content with the Transformer, write the result with the
      * FileReaderWriter.
-     * 
+     *
      * Result files are written in the same folder as the input files, and encoded with UTF8.
      *
      * File name of the result file:
@@ -33,9 +32,30 @@ public class Main {
         System.out.println("Application started, reading folder " + folder + "...");
         // TODO: implement the main method here
 
+        FileExplorer fileExplorer = new FileExplorer(folder);
+        FileReaderWriter fileReaderWriter = new FileReaderWriter();
+        EncodingSelector encodingSelector = new EncodingSelector();
+        Transformer transformer = new Transformer(newName, wordsPerLine);
+
         while (true) {
             try {
-                // TODO: loop over all files
+                final File currentFile = fileExplorer.getNewFile();
+
+                if (currentFile == null) {
+                    break;
+                }
+
+                final Charset encoding = encodingSelector.getEncoding(currentFile);
+
+                final String fileContents = fileReaderWriter.readFile(currentFile, encoding);
+
+                final String alteratedContents = transformer.replaceChuck(fileContents);
+
+                final boolean retVal = fileReaderWriter.writeFile(currentFile, alteratedContents, encoding);
+
+                if (!retVal) {
+                    throw new RuntimeException("Failed to write file");
+                }
 
             } catch (Exception e) {
                 System.out.println("Exception: " + e);
