@@ -24,7 +24,9 @@ public class Transformer {
      */
     public String replaceChuck(String source) {
         // TODO: Implement the method body here.
-        return "";
+        if(source.contains("Chuck Norris"))
+            source = source.replace("Chuck Norris", newName);
+        return source;
     }
 
     /**
@@ -34,7 +36,14 @@ public class Transformer {
      */
     public String capitalizeWords(String source) {
         // TODO: Implement the method body here.
-        return "";
+        String[] words = source.split(" ");
+        StringBuilder newContent = new StringBuilder();
+        for(String word : words) {
+            word = word.substring(0, 1).toUpperCase() + word.substring(1);//merci copilot
+            newContent.append(word).append(" ");
+        }
+        newContent.deleteCharAt(newContent.length() - 1);
+        return newContent.toString();
     }
 
     /**
@@ -46,6 +55,32 @@ public class Transformer {
     public String wrapAndNumberLines(String source) {
         // TODO: Implement the method body here.
         // Use the StringBuilder class to build the result string.
-        return "";
+        String[] words = source.split(" ");
+        StringBuilder newContent = new StringBuilder();
+
+        int lineCounter = 1;
+        int wordCounter = 1;
+
+        newContent.append(lineCounter);
+        newContent.append(". ");
+        lineCounter++;
+
+        for(String word : words) {
+            newContent.append(word).append(" ");
+
+            if(wordCounter % numWordsPerLine == 0) {
+                newContent.deleteCharAt(newContent.length() - 1);
+                newContent.append("\n");
+                newContent.append(lineCounter);
+                newContent.append(". ");
+                lineCounter++;
+            }
+            wordCounter++;
+        }
+
+        newContent.deleteCharAt(newContent.length() - 1);
+        newContent.append("\n");
+
+        return newContent.toString();
     }
 }   
