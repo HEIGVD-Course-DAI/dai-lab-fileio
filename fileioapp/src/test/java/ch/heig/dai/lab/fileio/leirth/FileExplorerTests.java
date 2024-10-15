@@ -1,16 +1,17 @@
 // TODO change this to your own package instead of jehrensb ***
-package ch.heig.dai.lab.fileio.ismaelgiovannetti;
+package ch.heig.dai.lab.fileio.leirth;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.Test;
-
 public class FileExplorerTests {
 
     @Test
+    @Disabled
     public void getNewFilesTest() throws IOException {
         // Create a temporary directory under the default temp directory using java.io.File
 
