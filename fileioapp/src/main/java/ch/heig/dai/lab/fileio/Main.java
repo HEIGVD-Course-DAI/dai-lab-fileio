@@ -3,11 +3,11 @@ package ch.heig.dai.lab.fileio;
 import java.io.File;
 
 // *** TODO: Change this to import your own package ***
-import ch.heig.dai.lab.fileio.jehrensb.*;
+import ch.heig.dai.lab.fileio.heigSamFernande.*;
 
 public class Main {
     // *** TODO: Change this to your own name ***
-    private static final String newName = "Edison";
+    private static final String newName = "heigSamFernande";
 
     /**
      * Main method to transform files in a folder.
@@ -28,18 +28,45 @@ public class Main {
             System.out.println("You need to provide two command line arguments: an existing folder and the number of words per line.");
             System.exit(1);
         }
+    
         String folder = args[0];
         int wordsPerLine = Integer.parseInt(args[1]);
+    
         System.out.println("Application started, reading folder " + folder + "...");
-        // TODO: implement the main method here
-
-        while (true) {
-            try {
-                // TODO: loop over all files
-
-            } catch (Exception e) {
-                System.out.println("Exception: " + e);
+    
+        try {
+            // Initialiser FileExplorer une seule fois
+            FileExplorer fileExplorer = new FileExplorer(folder);
+            EncodingSelector encodingSelector = new EncodingSelector();
+            FileReaderWriter fileReaderWriter = new FileReaderWriter();
+    
+            // Obtenir tous les fichiers dans le dossier
+            File[] files = new File(folder).listFiles();
+    
+            // Boucle sur chaque fichier
+            for (File file : files) {
+                if (file.isFile()) { // Vérifie que c'est bien un fichier
+                    String fileContent = fileReaderWriter.readFile(file, encodingSelector.getEncoding(file));
+                    
+                    Transformer transformer = new Transformer("heigSamFernande", wordsPerLine);
+                    fileContent = transformer.capitalizeWords(fileContent);
+                    fileContent = transformer.replaceChuck(fileContent);
+                    fileContent = transformer.wrapAndNumberLines(fileContent);
+    
+                    // Créer un nouveau fichier avec le suffixe ".processed"
+                    String processedFileName = file.getName() + ".processed";
+                    File processedFile = new File(file.getParent(), processedFileName);
+    
+                    // Écrire le contenu transformé dans le nouveau fichier
+                    fileReaderWriter.writeFile(processedFile, fileContent, encodingSelector.getEncoding(file));
+    
+                    System.out.println("Processed file: " + processedFileName);
+                }
             }
+        } catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
+            e.printStackTrace();
         }
     }
+    
 }
