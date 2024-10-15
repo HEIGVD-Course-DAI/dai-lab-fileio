@@ -1,14 +1,12 @@
 package ch.heig.dai.lab.fileio;
 
 import java.io.File;
+import java.nio.charset.Charset;
 
-// *** TODO: Change this to import your own package ***
-import ch.heig.dai.lab.fileio.jehrensb.*;
+import ch.heig.dai.lab.fileio.EscapedGibbon.*;
 
 public class Main {
-    // *** TODO: Change this to your own name ***
-    private static final String newName = "Edison";
-
+    private static final String newName = "Maxim Golubev";
     /**
      * Main method to transform files in a folder.
      * Create the necessary objects (FileExplorer, EncodingSelector, FileReaderWriter, Transformer).
@@ -29,14 +27,33 @@ public class Main {
             System.exit(1);
         }
         String folder = args[0];
+        String filenameExt = ".processed";
         int wordsPerLine = Integer.parseInt(args[1]);
         System.out.println("Application started, reading folder " + folder + "...");
-        // TODO: implement the main method here
-
+        FileExplorer folderInCheck = new FileExplorer(folder);
+        Transformer transformer = new Transformer(newName, wordsPerLine);
         while (true) {
-            try {
-                // TODO: loop over all files
-
+          EncodingSelector encoding = new EncodingSelector();
+          FileReaderWriter stream = new FileReaderWriter();
+          File fileInCheck = folderInCheck.getNewFile();
+          //If no new files, then the algorithm stops.
+          if(fileInCheck == null){
+            System.out.println("Application ended.");
+            break;
+          } 
+         //If encoding is incorrect, then we skip the file
+         //(In our case it is the file with ".processed" extension).
+          Charset fileEncoding = encoding.getEncoding(fileInCheck);
+          if(fileEncoding == null){
+           continue;
+          }
+            try { 
+             String sourceContent = stream.readFile(fileInCheck, fileEncoding); 
+             sourceContent = transformer.replaceChuck(sourceContent);
+             sourceContent = transformer.capitalizeWords(sourceContent);
+             sourceContent =  transformer.wrapAndNumberLines(sourceContent);
+             File targetFile = new File(fileInCheck.getAbsolutePath()+filenameExt);
+             stream.writeFile(targetFile, sourceContent, Charset.forName("UTF8"));
             } catch (Exception e) {
                 System.out.println("Exception: " + e);
             }
