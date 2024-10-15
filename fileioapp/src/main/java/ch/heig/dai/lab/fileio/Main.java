@@ -1,13 +1,13 @@
 package ch.heig.dai.lab.fileio;
 
 import java.io.File;
+import java.nio.Buffer;
+import java.nio.charset.Charset;
 
-// *** TODO: Change this to import your own package ***
-import ch.heig.dai.lab.fileio.jehrensb.*;
+import ch.heig.dai.lab.fileio.trigerber.*;
 
 public class Main {
-    // *** TODO: Change this to your own name ***
-    private static final String newName = "Edison";
+    private static final String newName = "Tristan";
 
     /**
      * Main method to transform files in a folder.
@@ -28,18 +28,65 @@ public class Main {
             System.out.println("You need to provide two command line arguments: an existing folder and the number of words per line.");
             System.exit(1);
         }
+
         String folder = args[0];
-        int wordsPerLine = Integer.parseInt(args[1]);
+        int wordsPerLine = 0;
+        
+        try {
+            wordsPerLine = Integer.parseInt(args[1]);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid number format for words per line.");
+            System.exit(1);
+        }
+
         System.out.println("Application started, reading folder " + folder + "...");
-        // TODO: implement the main method here
 
-        while (true) {
+        // Create objects
+        FileExplorer fileExplorer = new FileExplorer(folder);
+        EncodingSelector encodingSelector = new EncodingSelector();
+        FileReaderWriter fileReaderWriter = new FileReaderWriter();
+        Transformer transformer = new Transformer(newName, wordsPerLine);
+        File file;
+        
+        // Process files
+        while ((file = fileExplorer.getNewFile()) != null) {
             try {
-                // TODO: loop over all files
+                // Get encoding
+                Charset encoding = encodingSelector.getEncoding(file);
+                
+                if (encoding == null) {
+                    System.out.println("Unknown encoding for file " + file.getName());
+                    continue;
+                }
+                
+                // Read file
+                String content = fileReaderWriter.readFile(file, encoding);
+                
+                if (content == null) {
+                    System.out.println("Error reading file " + file.getName());
+                    continue;
+                }
 
+                // Create new file
+                File f = new File(file.getParent(), file.getName() + ".processed");
+                f.createNewFile();
+                Charset c = Charset.forName("UTF-8");
+                String newContent = transformer.replaceChuck(content);
+
+                
+                // Process content and write file
+                boolean success = fileReaderWriter.writeFile(
+                    f, newContent, c
+                );
+                
+                if (!success) {
+                    System.out.println("Error writing file " + file.getName());
+                }
             } catch (Exception e) {
-                System.out.println("Exception: " + e);
+                System.out.println("Exception processing file " + file.getName() + ": " + e.getMessage());
             }
         }
+
+        System.out.println("All files processed.");
     }
 }
