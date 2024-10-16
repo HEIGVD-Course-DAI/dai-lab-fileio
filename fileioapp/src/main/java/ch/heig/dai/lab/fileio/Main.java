@@ -49,11 +49,20 @@ public class Main {
                 //extract data
                 Charset encoding = encodingSelector.getEncoding(file);
                 String content = fileReaderWriter.readFile(file, encoding);
+                if (encoding == null || content == null) {
+                    System.out.println("error while reading: " + file.getName());
+                    continue;
+                }
 
                 //transform content
                 String chuckReplaced = transformer.replaceChuck(content);
                 String capitalized = transformer.capitalizeWords(chuckReplaced);
                 String wrapped = transformer.wrapAndNumberLines(capitalized);
+
+                //remove line separator if there are more than one
+                while (wrapped.endsWith("\n\n")) {
+                    wrapped = wrapped.substring(0, wrapped.length() - 1);
+                }
 
                 //write transformed file
                 String outputFileName = folder + "/" + file.getName() + ".processed";
