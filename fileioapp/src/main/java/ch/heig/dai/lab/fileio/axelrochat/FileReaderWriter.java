@@ -12,10 +12,22 @@ public class FileReaderWriter {
      * @return the content of the file as a String, or null if an error occurred.
      */
     public String readFile(File file, Charset encoding) {
-        // TODO: Implement the method body here. 
-        // Use the ...Stream and ...Reader classes from the java.io package.
-        // Make sure to close the streams and readers at the end.
-        return null;
+        StringBuilder content = new StringBuilder();
+    
+        try (InputStream fileInputStream = new FileInputStream(file);
+             Reader reader = new InputStreamReader(fileInputStream, encoding);
+             BufferedReader bufferedReader = new BufferedReader(reader)) {
+    
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                content.append(line).append(System.lineSeparator());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    
+        return content.toString();
     }
 
     /**
@@ -26,9 +38,18 @@ public class FileReaderWriter {
      * @return true if the file was written successfully, false otherwise
      */
     public boolean writeFile(File file, String content, Charset encoding) {
-        // TODO: Implement the method body here. 
-        // Use the ...Stream and ...Reader classes from the java.io package.
-        // Make sure to flush the data and close the streams and readers at the end.
-        return false;
+        try (OutputStream fileOutputStream = new FileOutputStream(file);
+             Writer writer = new OutputStreamWriter(fileOutputStream, encoding);
+             BufferedWriter bufferedWriter = new BufferedWriter(writer)) {
+    
+            bufferedWriter.write(content);
+    
+            bufferedWriter.flush();
+    
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
