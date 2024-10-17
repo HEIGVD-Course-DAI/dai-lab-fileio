@@ -2,12 +2,10 @@ package ch.heig.dai.lab.fileio;
 
 import java.io.File;
 
-// *** TODO: Change this to import your own package ***
-import ch.heig.dai.lab.fileio.jehrensb.*;
+import ch.heig.dai.lab.fileio.chomusukeworks.*;
 
 public class Main {
-    // *** TODO: Change this to your own name ***
-    private static final String newName = "Edison";
+    private static final String newName = "Artur";
 
     /**
      * Main method to transform files in a folder.
@@ -15,9 +13,9 @@ public class Main {
      * In an infinite loop, get a new file from the FileExplorer, determine its encoding with the EncodingSelector,
      * read the file with the FileReaderWriter, transform the content with the Transformer, write the result with the
      * FileReaderWriter.
-     * 
+     * <p>
      * Result files are written in the same folder as the input files, and encoded with UTF8.
-     *
+     * <p>
      * File name of the result file:
      * an input file "myfile.utf16le" will be written as "myfile.utf16le.processed",
      * i.e., with a suffixe ".processed".
