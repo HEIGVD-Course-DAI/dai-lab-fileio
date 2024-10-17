@@ -36,11 +36,17 @@ public class Main {
 		FileReaderWriter fileReaderWriter = new FileReaderWriter();
 		Transformer transformer = new Transformer(newName, wordsPerLine);
 
+        final String processedSuffix = ".processed";
 		while (true) {
 			try {
 				// Fetch a new file from the folder
-				File file = fileExplorer.getNewFile();
+				File file;
+                // Avoid taking processed files as input
+                do {
+                    file = fileExplorer.getNewFile();
+                } while (file != null && file.getName().endsWith(processedSuffix));
 				if (file == null) break;
+
 				Charset encoding = encodingSelector.getEncoding(file);
 				String contents = fileReaderWriter.readFile(file, encoding);
 
@@ -49,7 +55,7 @@ public class Main {
 				contents = transformer.capitalizeWords(contents);
 				contents = transformer.wrapAndNumberLines(contents);
 
-				fileReaderWriter.writeFile(new File(folder, file.getName() + ".processed"), contents, encoding);
+				fileReaderWriter.writeFile(new File(folder, file.getName() + processedSuffix), contents, encoding);
 			} catch (Exception e) {
 				System.out.println("Exception: " + e);
 			}
