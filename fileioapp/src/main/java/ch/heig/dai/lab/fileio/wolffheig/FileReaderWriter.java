@@ -27,7 +27,7 @@ public class FileReaderWriter {
 
         } catch (IOException e) {
             // Handle the exception and return null if an error occurs
-            e.printStackTrace();
+            System.out.println("Exception: " + e);
 
             return null;
         }
@@ -53,7 +53,7 @@ public class FileReaderWriter {
 
         } catch (IOException e) {
             // Handle the exception and return false if an error occurs
-            e.printStackTrace();
+            System.out.println("Exception: " + e);
 
             return false;
         }
