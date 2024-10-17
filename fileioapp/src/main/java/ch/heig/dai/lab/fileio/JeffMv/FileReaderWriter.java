@@ -14,6 +14,9 @@ public class FileReaderWriter {
     public String readFile(File file, Charset encoding) {
         // Use the ...Stream and ...Reader classes from the java.io package.
         // Make sure to close the streams and readers at the end.
+        if (! file.exists()) {
+            return null;
+        }
 
         StringBuilder content = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader( new FileInputStream(file.getAbsolutePath()), encoding ) )) {
@@ -48,6 +51,7 @@ public class FileReaderWriter {
                 return true;
             }
         } catch ( IOException e) {
+            System.out.println("An error occurred while when trying to write the file: " + file.getAbsolutePath());
             e.printStackTrace();
             return false;
         }
