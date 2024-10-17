@@ -1,6 +1,7 @@
 package ch.heig.dai.lab.fileio;
 
 import java.io.File;
+import java.nio.charset.Charset;
 
 import ch.heig.dai.lab.fileio.chomusukeworks.*;
 
@@ -37,8 +38,18 @@ public class Main {
 
 		while (true) {
 			try {
-				// TODO: loop over all files
+				// Fetch a new file from the folder
+				File file = fileExplorer.getNewFile();
+				if (file == null) break;
+				Charset encoding = encodingSelector.getEncoding(file);
+				String contents = fileReaderWriter.readFile(file, encoding);
 
+				// Apply transform operations on the contents
+				contents = transformer.replaceChuck(contents);
+				contents = transformer.capitalizeWords(contents);
+				contents = transformer.wrapAndNumberLines(contents);
+
+				fileReaderWriter.writeFile(new File(folder, file.getName() + ".processed"), contents, encoding);
 			} catch (Exception e) {
 				System.out.println("Exception: " + e);
 			}
