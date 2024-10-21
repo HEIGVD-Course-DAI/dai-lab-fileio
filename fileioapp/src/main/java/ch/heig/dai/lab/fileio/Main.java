@@ -51,9 +51,16 @@ public class Main {
                     continue;   // permet de ne pas traiter les fichiers .processed
                 }
                 var textFile = myFileReaderWriter.readFile(inputFile, fileCharset);
+
+                // modification
                 var modifiedTextFile = myTransformer.replaceChuck(textFile);
                 modifiedTextFile = myTransformer.capitalizeWords(modifiedTextFile);
                 modifiedTextFile = myTransformer.wrapAndNumberLines(modifiedTextFile);
+
+                // suppression des doubles sauts de ligne
+                modifiedTextFile = modifiedTextFile.replaceAll("\n\n", "\n");
+
+                // écriture du fichier
                 myFileReaderWriter.writeFile(outputFile, modifiedTextFile, StandardCharsets.UTF_8);
 
             } catch (Exception e) {
