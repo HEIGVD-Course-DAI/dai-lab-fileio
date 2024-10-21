@@ -52,6 +52,7 @@ public class Main {
                 }
                 var textFile = myFileReaderWriter.readFile(inputFile, fileCharset);
                 var modifiedTextFile = myTransformer.wrapAndNumberLines(textFile);
+                modifiedTextFile = myTransformer.replaceChuck(modifiedTextFile);
                 myFileReaderWriter.writeFile(outputFile, modifiedTextFile, StandardCharsets.UTF_8);
 
             } catch (Exception e) {
