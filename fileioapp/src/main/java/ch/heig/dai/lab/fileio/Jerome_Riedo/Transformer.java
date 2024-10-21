@@ -62,13 +62,13 @@ public class Transformer {
         output.append(lineNumber++).append(". ");
 
         for (String word : words) {
-            output.append(word).append(" ");
-            ++i;
             if (i == numWordsPerLine) {
                 output.setLength(output.length() - 1);
                 output.append("\n").append(lineNumber++).append(". ");
                 i = 0;
             }
+            output.append(word).append(" ");
+            i++;
         }
         output.setLength(output.length() - 1); // suppression du dernier " "
         return output.append("\n").toString();
