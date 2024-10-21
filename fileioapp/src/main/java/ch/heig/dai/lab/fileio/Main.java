@@ -1,13 +1,14 @@
 package ch.heig.dai.lab.fileio;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 
 // *** TODO: Change this to import your own package ***
 import ch.heig.dai.lab.fileio.jehrensb.*;
 
 public class Main {
     // *** TODO: Change this to your own name ***
-    private static final String newName = "Edison";
+    private static final String newName = "Jerome-Riedo";
 
     /**
      * Main method to transform files in a folder.
@@ -32,14 +33,32 @@ public class Main {
         int wordsPerLine = Integer.parseInt(args[1]);
         System.out.println("Application started, reading folder " + folder + "...");
         // TODO: implement the main method here
+        var myFileExplorer = new ch.heig.dai.lab.fileio.Jerome_Riedo.FileExplorer(folder);
+        var myEncoderSelector = new ch.heig.dai.lab.fileio.Jerome_Riedo.EncodingSelector();
+        var myFileReaderWriter = new ch.heig.dai.lab.fileio.Jerome_Riedo.FileReaderWriter();
+        var myTransformer = new ch.heig.dai.lab.fileio.Jerome_Riedo.Transformer(newName, wordsPerLine);
 
         while (true) {
             try {
                 // TODO: loop over all files
+                var inputFile = myFileExplorer.getNewFile();
+                if (inputFile == null) {
+                    break; // plus de fichier à lire : sortie de la boucle
+                }
+                var outputFile = new File(inputFile.getAbsolutePath() + ".processed");
+                var fileCharset = myEncoderSelector.getEncoding(inputFile);
+                if (fileCharset == null) {
+                    continue;   // permet de ne pas traiter les fichiers .processed
+                }
+                var textFile = myFileReaderWriter.readFile(inputFile, fileCharset);
+                var modifiedTextFile = myTransformer.replaceChuck(textFile);
+                myFileReaderWriter.writeFile(outputFile, modifiedTextFile, StandardCharsets.UTF_8);
 
             } catch (Exception e) {
                 System.out.println("Exception: " + e);
+                break;
             }
         }
+        System.out.println("Application finished.");
     }
 }
