@@ -8,7 +8,7 @@ import ch.heig.dai.lab.fileio.jehrensb.*;
 
 public class Main {
     // *** TODO: Change this to your own name ***
-    private static final String newName = "Jerome-Riedo";
+    private static final String newName = "Jérôme Riedo";
 
     /**
      * Main method to transform files in a folder.
