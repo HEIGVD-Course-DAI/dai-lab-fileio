@@ -51,8 +51,9 @@ public class Main {
                     continue;   // permet de ne pas traiter les fichiers .processed
                 }
                 var textFile = myFileReaderWriter.readFile(inputFile, fileCharset);
-                var modifiedTextFile = myTransformer.wrapAndNumberLines(textFile);
-                modifiedTextFile = myTransformer.replaceChuck(modifiedTextFile);
+                var modifiedTextFile = myTransformer.replaceChuck(textFile);
+                modifiedTextFile = myTransformer.capitalizeWords(modifiedTextFile);
+                modifiedTextFile = myTransformer.wrapAndNumberLines(modifiedTextFile);
                 myFileReaderWriter.writeFile(outputFile, modifiedTextFile, StandardCharsets.UTF_8);
 
             } catch (Exception e) {
