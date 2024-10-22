@@ -63,15 +63,18 @@ public class Transformer {
 		var result = new StringBuilder();
 
 		// Creates the result one line at a time
-		int nbLines = words.size() / numWordsPerLine + 1;
+		int nbLines = words.size() / numWordsPerLine + (words.size() % numWordsPerLine == 0 ? 0 : 1);
 		for (int i = 0; i < nbLines; ++i) {
 			int first = i * numWordsPerLine;
 			int last = Math.min((i + 1) * numWordsPerLine, words.size());
 
-			result.append(String.format("%d. %s\n",
+			String s = String.format("%d. %s\n",
 					i + 1,
 					String.join(" ", words.subList(first, last))
-			));
+			);
+			System.out.println(s);
+
+			result.append(s);
 		}
 
 		return result.toString();
