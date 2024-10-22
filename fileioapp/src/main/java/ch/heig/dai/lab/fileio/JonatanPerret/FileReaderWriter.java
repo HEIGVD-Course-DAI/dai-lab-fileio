@@ -1,9 +1,11 @@
 package ch.heig.dai.lab.fileio.JonatanPerret;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
@@ -61,6 +63,19 @@ public class FileReaderWriter {
         // TODO: Implement the method body here. 
         // Use the ...Stream and ...Reader classes from the java.io package.
         // Make sure to flush the data and close the streams and readers at the end.
+        
+        try {
+            // write the content to the file
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
+            bw.write(content);
+            bw.close();
+            return true;
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing the file");
+        } catch (RuntimeException e) {
+            System.out.println("An error occurred");
+        }
+        
         return false;
     }
 }
