@@ -39,14 +39,11 @@ public class Transformer {
 	public String capitalizeWords(String source) {
 		String[] words = source.split(" ");
 
-		var result = new StringBuilder();
-
-		for (String word : words) {
-			result.append(' ');
-			result.append(firstCharToUpperCase(word));
+		for (int i = 0; i < words.length; i++) {
+			words[i] = firstCharToUpperCase(words[i]);
 		}
 
-		return result.substring(1);
+		return String.join(" ", words);
 	}
 
 	/**
@@ -68,13 +65,12 @@ public class Transformer {
 			int first = i * numWordsPerLine;
 			int last = Math.min((i + 1) * numWordsPerLine, words.size());
 
-			String s = String.format("%d. %s\n",
+			String line = String.format("%d. %s\n",
 					i + 1,
 					String.join(" ", words.subList(first, last))
 			);
-			System.out.println(s);
 
-			result.append(s);
+			result.append(line);
 		}
 
 		return result.toString();
