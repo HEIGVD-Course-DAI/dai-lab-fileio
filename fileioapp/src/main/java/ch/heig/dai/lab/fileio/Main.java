@@ -4,13 +4,11 @@ import java.io.File;
 import java.nio.charset.Charset;
 
 // *** TODO: Change this to import your own package ***
-import ch.heig.dai.lab.fileio.JeffMv.*;
-
-import javax.xml.crypto.dsig.Transform;
+import ch.heig.dai.lab.fileio.joelCarman.*;
 
 public class Main {
     // *** TODO: Change this to your own name ***
-    private static final String newName = "Jeffrey";
+    private static final String newName = "Joel Carman";
 
     /**
      * Main method to transform files in a folder.
@@ -34,32 +32,27 @@ public class Main {
         String folder = args[0];
         int wordsPerLine = Integer.parseInt(args[1]);
         System.out.println("Application started, reading folder " + folder + "...");
-        // TODO: implement the main method here
 
-        FileExplorer explorer = new FileExplorer(folder);
-
-
+        FileExplorer fileExplorer = new FileExplorer(folder);
+        FileReaderWriter fileReaderWriter = new FileReaderWriter();
+        EncodingSelector encodingSelector = new EncodingSelector();
+        Transformer transformer = new Transformer(newName, wordsPerLine);
 
         while (true) {
-
             try {
-                // TODO: loop over all files
-                File file = explorer.getNewFile();
-                if (file == null || !file.exists()) {
+                File file = fileExplorer.getNewFile();
+                if (file == null) {
+                    System.out.println("No more files to process, exiting...");
                     break;
                 }
-                EncodingSelector encSelector = new EncodingSelector();
-                Charset encoding = encSelector.getEncoding(file);
-                FileReaderWriter fileHandler = new FileReaderWriter();
-                Transformer transformer = new Transformer(newName, wordsPerLine);
+                Charset charset = encodingSelector.getEncoding(file);
+                String content = fileReaderWriter.readFile(file, charset);
+                String transformedContent = transformer.replaceChuck(content);
+                transformedContent = transformer.capitalizeWords(transformedContent);
+                transformedContent = transformer.wrapAndNumberLines(transformedContent);
 
-                String content = fileHandler.readFile(file, encoding);
-                content = transformer.capitalizeWords(content);
-                content = transformer.replaceChuck(content);
-                content = transformer.wrapAndNumberLines(content);
-
-                String destPath = destinationFilepath(file);
-                fileHandler.writeFile(new File(destPath), content, encoding);
+                
+                fileReaderWriter.writeFile( new File(destinationFilepath(file)) , transformedContent, charset);
 
             } catch (Exception e) {
                 System.out.println("Exception: " + e);
