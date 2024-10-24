@@ -2,6 +2,7 @@ package ch.heig.dai.lab.fileio.hliosone;
 
 import java.io.File;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 public class EncodingSelector {
 
@@ -18,6 +19,22 @@ public class EncodingSelector {
      */
     public Charset getEncoding(File file) {
         // TODO: implement the method body here
+
+        if (file != null) {
+            String fileName = file.getName();
+            int dotIndex = fileName.lastIndexOf('.');
+
+            if (dotIndex > 0 && dotIndex < fileName.length() - 1) {
+                String extension = fileName.substring(dotIndex + 1);
+                return switch (extension) {
+                    case "txt" -> StandardCharsets.US_ASCII;
+                    case "utf8" -> StandardCharsets.UTF_8;
+                    case "utf16be" -> StandardCharsets.UTF_16BE;
+                    case "utf16le" -> StandardCharsets.UTF_16LE;
+                    default -> null;
+                };
+            }
+        }
         return null;
     }
 }
