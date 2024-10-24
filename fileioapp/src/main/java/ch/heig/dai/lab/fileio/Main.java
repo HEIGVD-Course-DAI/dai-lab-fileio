@@ -1,13 +1,13 @@
 package ch.heig.dai.lab.fileio;
 
 import java.io.File;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
-// *** TODO: Change this to import your own package ***
-import ch.heig.dai.lab.fileio.jehrensb.*;
+import ch.heig.dai.lab.fileio.adamrab187.*;
 
 public class Main {
-    // *** TODO: Change this to your own name ***
-    private static final String newName = "Edison";
+    private static final String newName = "Adam";
 
     /**
      * Main method to transform files in a folder.
@@ -15,7 +15,7 @@ public class Main {
      * In an infinite loop, get a new file from the FileExplorer, determine its encoding with the EncodingSelector,
      * read the file with the FileReaderWriter, transform the content with the Transformer, write the result with the
      * FileReaderWriter.
-     * 
+     *
      * Result files are written in the same folder as the input files, and encoded with UTF8.
      *
      * File name of the result file:
@@ -31,11 +31,51 @@ public class Main {
         String folder = args[0];
         int wordsPerLine = Integer.parseInt(args[1]);
         System.out.println("Application started, reading folder " + folder + "...");
-        // TODO: implement the main method here
 
+        // Create necessary objects
+        FileExplorer fileExplorer = new FileExplorer(folder);
+        EncodingSelector encodingSelector = new EncodingSelector();
+        FileReaderWriter fileReaderWriter = new FileReaderWriter();
+        Transformer transformer = new Transformer(newName, wordsPerLine);
+
+        // Infinite loop to process files
         while (true) {
             try {
-                // TODO: loop over all files
+                // Get a new file from the file explorer
+                File file = fileExplorer.getNewFile();
+                if (file == null) {
+                    // No new file to process, continue the loop
+                    continue;
+                }
+
+                // Determine the file's encoding
+                Charset encoding = encodingSelector.getEncoding(file);
+                if (encoding == null) {
+                    System.out.println("Encoding not recognized for file: " + file.getName());
+                    continue;
+                }
+
+                // Read the content of the file
+                String content = fileReaderWriter.readFile(file, encoding);
+                if (content == null) {
+                    System.out.println("Failed to read file: " + file.getName());
+                    continue;
+                }
+
+                // Transform the content
+                String transformedContent = transformer.replaceChuck(content);
+                transformedContent = transformer.capitalizeWords(transformedContent);
+                transformedContent = transformer.wrapAndNumberLines(transformedContent);
+
+                // Define the result file's name with a ".processed" suffix
+                File resultFile = new File(file.getAbsolutePath() + ".processed");
+
+                // Write the transformed content to a new file encoded in UTF-8
+                if (!fileReaderWriter.writeFile(resultFile, transformedContent, StandardCharsets.UTF_8)) {
+                    System.out.println("Failed to write file: " + resultFile.getName());
+                } else {
+                    System.out.println("Processed file: " + file.getName() + " -> " + resultFile.getName());
+                }
 
             } catch (Exception e) {
                 System.out.println("Exception: " + e);
