@@ -20,19 +20,17 @@ public class FileReaderWriter {
             return null;
         }
 
-        try {
-            var reader = new FileReader(file, encoding);
-            var bufferedReader = new BufferedReader(reader);
-            StringBuilder stringBuilder = new StringBuilder();
+        try (var reader = new BufferedReader(
+                new InputStreamReader(new FileInputStream(file), encoding))) {
 
+            StringBuilder content = new StringBuilder();
             String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                stringBuilder.append(line).append(System.lineSeparator());
+            while ((line = reader.readLine()) != null) {
+                content.append(line).append("\n");
             }
-            bufferedReader.close();
-            return stringBuilder.toString();
-
-        } catch (IOException e) {
+            return content.toString();
+                
+            }    catch (IOException e) {
             e.printStackTrace();
             return null;
         }
@@ -54,16 +52,13 @@ public class FileReaderWriter {
             return false;
         }
 
-        try {
-            OutputStream outputStream = new FileOutputStream(file);
-            Writer writer = new OutputStreamWriter(outputStream, encoding);
-            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+        try (var writer = new BufferedWriter(
+                new OutputStreamWriter(new FileOutputStream(file), encoding))) {
 
-            bufferedWriter.write(content);
-            bufferedWriter.flush();
-            bufferedWriter.close();
+            writer.write(content + '\n');
+            writer.flush();
+
             return true;
-
         } catch (IOException e) {
             e.printStackTrace();
             return false;
