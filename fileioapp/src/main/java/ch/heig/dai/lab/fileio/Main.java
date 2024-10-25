@@ -1,13 +1,15 @@
 package ch.heig.dai.lab.fileio;
 
 import java.io.File;
+import java.nio.charset.Charset;
 
-// *** TODO: Change this to import your own package ***
-import ch.heig.dai.lab.fileio.jehrensb.*;
+import ch.heig.dai.lab.fileio.ismaelgiovannetti.EncodingSelector;
+import ch.heig.dai.lab.fileio.ismaelgiovannetti.FileExplorer;
+import ch.heig.dai.lab.fileio.ismaelgiovannetti.FileReaderWriter;
+import ch.heig.dai.lab.fileio.ismaelgiovannetti.Transformer;
 
 public class Main {
-    // *** TODO: Change this to your own name ***
-    private static final String newName = "Edison";
+    private static final String newName = "Ismael";
 
     /**
      * Main method to transform files in a folder.
@@ -31,12 +33,46 @@ public class Main {
         String folder = args[0];
         int wordsPerLine = Integer.parseInt(args[1]);
         System.out.println("Application started, reading folder " + folder + "...");
-        // TODO: implement the main method here
+
+        // Create the necessary objects
+        FileExplorer fileExplorer = new FileExplorer(folder);
+        EncodingSelector encodingSelector = new EncodingSelector();
+        FileReaderWriter fileReaderWriter = new FileReaderWriter();
+        Transformer transformer = new Transformer(newName, wordsPerLine);
 
         while (true) {
             try {
-                // TODO: loop over all files
+                // Get a new file from the FileExplorer
+                File file = fileExplorer.getNewFile();
+                if (file == null) {
+                    break;
+                }
 
+                // Determine the encoding of the file
+                Charset encoding = encodingSelector.getEncoding(file);
+                if (encoding == null) {
+                    System.out.println("Could not determine the encoding of the file " + file.getName());
+                    continue;
+                }
+
+                // Read the file
+                String content = fileReaderWriter.readFile(file, encoding);
+                if (content == null) {
+                    System.out.println("Could not read the file " + file.getName());
+                    continue;
+                }
+
+                // Transform the content
+                String transformedContent = transformer.wrapAndNumberLines(transformer.capitalizeWords(transformer.replaceChuck(content)));
+
+                // Write the result
+                String resultFileName = file.getName() + ".processed";
+                File resultFile = new File(file.getParent(), resultFileName);
+                if (!fileReaderWriter.writeFile(resultFile, transformedContent, Charset.defaultCharset())) {
+                    System.out.println("Could not write the result to the file " + resultFileName);
+                }
+
+                System.out.println("File " + file.getName() + " processed successfully.");
             } catch (Exception e) {
                 System.out.println("Exception: " + e);
             }
