@@ -74,6 +74,7 @@ public class Transformer {
             wordCounter++;
         }
         newContent.deleteCharAt(newContent.length() - 1);
+        if((wordCounter-1) % numWordsPerLine == 0){newContent.setLength(newContent.length() - 4);}
         newContent.append("\n");
         return newContent.toString();
     }
