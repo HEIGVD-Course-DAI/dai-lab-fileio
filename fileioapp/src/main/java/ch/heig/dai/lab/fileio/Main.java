@@ -58,7 +58,7 @@ public class Main {
                 modifiedTextFile = myTransformer.wrapAndNumberLines(modifiedTextFile);
 
                 // suppression des doubles sauts de ligne
-                modifiedTextFile = modifiedTextFile.replaceAll("\n\n", "\n");
+                modifiedTextFile = modifiedTextFile.replaceAll("\n\n", "");
 
                 // écriture du fichier
                 myFileReaderWriter.writeFile(outputFile, modifiedTextFile, StandardCharsets.UTF_8);
