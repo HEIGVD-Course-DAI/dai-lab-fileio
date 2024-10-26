@@ -23,7 +23,7 @@ public class Transformer {
      * @return the transformed string
      */
     public String replaceChuck(String source) {
-        return source.replace("Chuck Norris", newName);
+        return source.replace("Chuck Norris", this.newName);
     }
 
     /**
@@ -67,7 +67,7 @@ public class Transformer {
         for (String word : words) {
             result.append(word);
             wordCount++;
-            if (wordCount == numWordsPerLine) {
+            if (wordCount == this.numWordsPerLine) {
                 lineNumber++;       // Increment line number
                 result.append(System.lineSeparator()).append(lineNumber).append(". ");
                 wordCount = 0;      // Reset word count after reaching the limit
