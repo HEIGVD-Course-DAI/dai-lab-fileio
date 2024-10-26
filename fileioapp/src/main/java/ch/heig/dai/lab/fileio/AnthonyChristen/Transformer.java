@@ -1,5 +1,8 @@
 package ch.heig.dai.lab.fileio.AnthonyChristen;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Transformer {
 
     private final String newName;
@@ -23,8 +26,7 @@ public class Transformer {
      * @return the transformed string
      */
     public String replaceChuck(String source) {
-        // TODO: Implement the method body here.
-        return "";
+        return source.replaceAll("Chuck Norris", newName);
     }
 
     /**
@@ -33,8 +35,22 @@ public class Transformer {
      * @return the transformed string
      */
     public String capitalizeWords(String source) {
-        // TODO: Implement the method body here.
-        return "";
+        String[] words = source.split(" ");
+        StringBuilder result = new StringBuilder();
+
+        for (int i = 0; i < words.length; ++i) {
+            String word = words[i];
+
+            result
+                .append(word.substring(0, 1).toUpperCase())
+                .append(word.substring(1));
+
+            if (i != words.length - 1) {
+                result.append(" ");
+            }
+        }
+
+        return result.toString();
     }
 
     /**
@@ -44,8 +60,27 @@ public class Transformer {
      * @return the transformed string
      */
     public String wrapAndNumberLines(String source) {
-        // TODO: Implement the method body here.
-        // Use the StringBuilder class to build the result string.
-        return "";
+        String[] words = source.split(" ");
+        StringBuilder result = new StringBuilder();
+        List<String> line = new ArrayList<>();
+
+        int lineNumber = 1;
+
+        for (String word : words) {
+            if (line.size() >= numWordsPerLine) {
+                result.append(lineNumber).append(". ").append(String.join(" ", line)).append("\n");
+                line.clear();
+                lineNumber++;
+            }
+
+            line.add(word);
+        }
+
+        // Add the last line to the result if not empty
+        if (!line.isEmpty()) {
+            result.append(lineNumber).append(". ").append(String.join(" ", line)).append("\n");
+        }
+
+        return result.toString();
     }
 }   
