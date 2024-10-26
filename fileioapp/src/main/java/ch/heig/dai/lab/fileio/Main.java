@@ -3,11 +3,13 @@ package ch.heig.dai.lab.fileio;
 import java.io.File;
 
 // *** TODO: Change this to import your own package ***
-import ch.heig.dai.lab.fileio.jehrensb.*;
+import ch.heig.dai.lab.fileio.Gabi3469.*;
+
+import java.nio.charset.Charset;
 
 public class Main {
     // *** TODO: Change this to your own name ***
-    private static final String newName = "Jean-Claude Van Damme";
+    private static final String newName = "Gabriel Barros Fernandes";
 
     /**
      * Main method to transform files in a folder.
@@ -36,6 +38,44 @@ public class Main {
         while (true) {
             try {
                 // TODO: loop over all files
+                File dir = new File(folder);
+                File[] files = dir.listFiles();
+
+                for (File file : files) {
+                    if (file.isFile()) {
+                        try {
+                            EncodingSelector encodingSelector = new EncodingSelector();
+                            FileReaderWriter fileReaderWriter = new FileReaderWriter();
+                            Transformer transformer = new Transformer(newName, wordsPerLine);
+                            Charset encoding = encodingSelector.getEncoding(file);
+                            if (encoding == null) {
+                                System.out.println("Unknown encoding for file: " + file.getName());
+                                continue; // Skip file if encoding is unknown
+                            }
+
+                            String content = fileReaderWriter.readFile(file, encoding);
+                            if (content == null) {
+                                System.err.println("Error reading file: " + file.getName());
+                                continue; // Skip file if reading fails
+                            }
+
+                            String transformedContent = transformer.replaceChuck(content);
+                            transformedContent = transformer.capitalizeWords(transformedContent);
+                            transformedContent = transformer.wrapAndNumberLines(transformedContent);
+
+                            File outputFile = new File(file.getPath() + ".processed");
+                            if (!fileReaderWriter.writeFile(outputFile, transformedContent, encoding)) {
+                                System.err.println("Error writing file: " + outputFile.getName());
+                            } else {
+                                System.out.println("Processed file: " + outputFile.getName());
+                            }
+                        } catch (Exception e) {
+                            System.err.println("Exception: " + e);
+                        }
+                    }else {
+                        System.out.println("Skipping non-file: " + file.getName());
+                    }
+                }
 
             } catch (Exception e) {
                 System.out.println("Exception: " + e);
