@@ -19,6 +19,7 @@ public class EncodingSelector {
      */
     public Charset getEncoding(File file) {
         // TODO: implement the method body here
+
         if (file != null) {
             String fileName = file.getName();
             int dotIndex = fileName.lastIndexOf('.');

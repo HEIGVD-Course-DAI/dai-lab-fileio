@@ -8,7 +8,7 @@ public class FileReaderWriter {
     /**
      * Read the content of a file with a given encoding.
      * @param file the file to read. 
-     * @param encoding
+     * @param encoding file encoding
      * @return the content of the file as a String, or null if an error occurred.
      */
     public String readFile(File file, Charset encoding) {
