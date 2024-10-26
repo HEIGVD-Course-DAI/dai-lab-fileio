@@ -76,6 +76,9 @@ public class Main {
                         System.out.println("Skipping non-file: " + file.getName());
                     }
                 }
+                System.out.println("All files processed.");
+                break;
+                
 
             } catch (Exception e) {
                 System.out.println("Exception: " + e);
