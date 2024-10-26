@@ -26,19 +26,6 @@ public class FileExplorer {
      */
     public File getNewFile() {
         // TODO: implement the method body here
-        if (folder.isDirectory() && folder.exists()){
-            File[] files = folder.listFiles();
-
-            if (files != null){
-                for (File file : files){
-                    if (!knownFiles.contains(file)){
-                        knownFiles.add(file);
-                        return file;
-                    }
-                }
-            }
-        }
-
         return null;
     }
 }

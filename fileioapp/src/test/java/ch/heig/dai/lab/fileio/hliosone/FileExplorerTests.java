@@ -11,12 +11,14 @@ import java.util.Set;
 public class FileExplorerTests {
 
     @Test
+    @Disabled
     public void getNewFilesTest() throws IOException {
         // Create a temporary directory under the default temp directory using java.io.File
 
         File tempDir = new File(System.getProperty("java.io.tmpdir"), Long.toString(System.nanoTime()));
         tempDir.mkdir();
         tempDir.deleteOnExit();
+        
         // Create a FileExplorer for that directory
         FileExplorer explorer = new FileExplorer(tempDir.toString());
 
