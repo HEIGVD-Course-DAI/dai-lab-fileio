@@ -1,6 +1,7 @@
 package ch.heig.dai.lab.fileio;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 
 // *** TODO: Change this to import your own package ***
 import ch.heig.dai.lab.fileio.hliosone.*;
@@ -56,12 +57,12 @@ public class Main {
                 if (content == null) {continue;}
 
                 // Transform the content
-                String transformedContent = transformer.replaceChuck(content);
-                transformedContent = transformer.capitalizeWords(transformedContent);
+                String transformedContent = transformer.capitalizeWords(content);
+                transformedContent = transformer.wrapAndNumberLines(transformedContent);
 
                 // Write the transformed content to a new file
                 File newFile = new File(file.getParent(), file.getName() + ".processed");
-                if (fileReaderWriter.writeFile(newFile, transformedContent, encoding)) {
+                if (fileReaderWriter.writeFile(newFile, transformedContent, StandardCharsets.UTF_8)) {
                     System.out.println("File " + file.getName() + " processed successfully");
                 } else {
                     System.out.println("Error processing file " + file.getName());
