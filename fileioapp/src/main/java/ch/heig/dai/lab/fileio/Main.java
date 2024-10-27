@@ -53,7 +53,7 @@ public class Main {
 
                 //ne pas traiter les fichier avec l'extention .processed
                 int index=input.getName().indexOf(".processed");
-                if(index!=-1 && index == input.getName().length()-".processed".length()) //vérifie que le fichier process est bien à la fin du fichier
+                if(index!=-1 && index == input.getName().length() - ".processed".length()) //vérifie que le fichier process est bien à la fin du fichier
                 {
                     continue;
                 }
@@ -74,12 +74,13 @@ public class Main {
                     continue;
                 }
 
-                String contentTransformed= transformer.replaceChuck(content); //dans cette ordre au cas ou la personne n'as pas mis de majuscule pour son nom prenom
+
+                String contentTransformed= transformer.replaceChuck(content);
                 contentTransformed=transformer.capitalizeWords(contentTransformed);
                 contentTransformed=transformer.wrapAndNumberLines(contentTransformed);
 
                 //création fichier sorti
-                File output=new File(input.getPath()+".process"); //utiliser le chemin du fichier entrée pour la création du fichier de sorti en ajoutant le .process
+                File output=new File(input.getPath()+".processed"); //utiliser le chemin du fichier entrée pour la création du fichier de sorti en ajoutant le .process
 
                 if(fileReaderWriter.writeFile(output,contentTransformed,encoding)) //écriture dans fichier si la fonction retourne false il y a une erreur.
                 {
