@@ -67,8 +67,7 @@ public class Main {
                 } else {
                     System.out.println("Error processing file " + file.getName());
                 }
-
-
+                
             } catch (Exception e) {
                 System.out.println("Exception: " + e);
             }
