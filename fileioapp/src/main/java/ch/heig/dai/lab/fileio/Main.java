@@ -74,9 +74,8 @@ public class Main {
                     continue;
                 }
 
-
-                String contentTransformed=transformer.capitalizeWords(content);
-                contentTransformed= transformer.replaceChuck(contentTransformed);
+                String contentTransformed= transformer.replaceChuck(content); //dans cette ordre au cas ou la personne n'as pas mis de majuscule pour son nom prenom
+                contentTransformed=transformer.capitalizeWords(contentTransformed);
                 contentTransformed=transformer.wrapAndNumberLines(contentTransformed);
 
                 //création fichier sorti
