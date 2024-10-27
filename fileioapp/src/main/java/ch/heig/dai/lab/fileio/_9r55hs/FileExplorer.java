@@ -26,7 +26,7 @@ public class FileExplorer {
      */
     public File getNewFile() {
         for(File file : folder.listFiles()){
-            if(knownFiles.contains(file))
+            if(knownFiles.contains(file) || file.getName().contains("processed"))
                 continue;
             
             knownFiles.add(file);
