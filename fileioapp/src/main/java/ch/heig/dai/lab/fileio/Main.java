@@ -1,13 +1,14 @@
 package ch.heig.dai.lab.fileio;
 
 import java.io.File;
+import java.nio.charset.Charset;
 
 // *** TODO: Change this to import your own package ***
-import ch.heig.dai.lab.fileio.jehrensb.*;
+import ch.heig.dai.lab.fileio.aminekhelfi.*;
 
 public class Main {
     // *** TODO: Change this to your own name ***
-    private static final String newName = "Jean-Claude Van Damme";
+    private static final String newName = "Amine Khelfi";
 
     /**
      * Main method to transform files in a folder.
@@ -15,7 +16,7 @@ public class Main {
      * In an infinite loop, get a new file from the FileExplorer, determine its encoding with the EncodingSelector,
      * read the file with the FileReaderWriter, transform the content with the Transformer, write the result with the
      * FileReaderWriter.
-     * 
+     *
      * Result files are written in the same folder as the input files, and encoded with UTF8.
      *
      * File name of the result file:
@@ -33,9 +34,61 @@ public class Main {
         System.out.println("Application started, reading folder " + folder + "...");
         // TODO: implement the main method here
 
+        //Initialiser les objets
+        FileExplorer fileExplorer = new FileExplorer(folder); //découvrir l'ensemble des fichiers
+        EncodingSelector encodingSelector = new EncodingSelector(); //pour l'encodage du fichier
+        FileReaderWriter fileReaderWriter = new FileReaderWriter(); //lecture et écriture du fichier
+        Transformer transformer= new Transformer(newName,wordsPerLine); //appliquer les fonctions de transformation
+
         while (true) {
             try {
                 // TODO: loop over all files
+                File input=fileExplorer.getNewFile();//récupérer le prochain fichier
+
+                if(input==null)
+                {
+                    System.out.println("Tout les fichiers ont été traités");
+                    break;
+                }
+
+                //ne pas traiter les fichier avec l'extention .processed
+                int index=input.getName().indexOf(".processed");
+                if(index!=-1 && index == input.getName().length()-".processed".length()) //vérifie que le fichier process est bien à la fin du fichier
+                {
+                    continue;
+                }
+
+                //Détermine l'encodage
+                Charset encoding =encodingSelector.getEncoding(input);
+                if(encoding==null)
+                {
+                    System.out.println("Encoding not found for: "+input.getName());
+                    continue;
+                }
+
+                //lire le contenu
+                String content=fileReaderWriter.readFile(input,encoding);
+                if(content==null)
+                {
+                    System.out.println("Erreur reading file: "+input.getName());
+                    continue;
+                }
+
+
+                String contentTransformed=transformer.capitalizeWords(content);
+                contentTransformed= transformer.replaceChuck(contentTransformed);
+                contentTransformed=transformer.wrapAndNumberLines(contentTransformed);
+
+                //création fichier sorti
+                File output=new File(input.getPath()+".process"); //utiliser le chemin du fichier entrée pour la création du fichier de sorti en ajoutant le .process
+
+                if(fileReaderWriter.writeFile(output,contentTransformed,encoding)) //écriture dans fichier si la fonction retourne false il y a une erreur.
+                {
+                    System.out.println("Processed file: "+output.getName());
+                }
+                else{
+                    System.out.println("Error writing file: "+output.getName());
+                }
 
             } catch (Exception e) {
                 System.out.println("Exception: " + e);
