@@ -16,23 +16,20 @@ public class FileReaderWriter {
         // TODO: Implement the method body here. 
         // Use the ...Stream and ...Reader classes from the java.io package.
         // Make sure to close the streams and readers at the end.
-        try {
-            var reader = new BufferedReader(
-                    new InputStreamReader(
-                            new FileInputStream(file), encoding
-                    )
-            );
-
-            StringBuilder reading = new StringBuilder();
-
-            while ((reader.readLine()) != null) {
-                reading.append(reader.readLine());
+        try(
+                FileInputStream fileInputStream = new FileInputStream(file);
+                InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, encoding);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader)
+        ){
+            StringBuilder sbuilder = new StringBuilder();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                sbuilder.append(line).append(System.lineSeparator());
             }
-
-            reader.close();
-            return reading.toString();
+            return sbuilder.toString();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Error reading file : " + e);
+            return null;
         }
     }
 
@@ -57,6 +54,7 @@ public class FileReaderWriter {
             return true;
 
         } catch (IOException e) {
+            System.out.println("Error writing file : " + e);
             return false;
         }
     }
