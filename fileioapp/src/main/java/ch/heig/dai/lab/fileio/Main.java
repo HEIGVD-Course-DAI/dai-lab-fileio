@@ -1,13 +1,12 @@
 package ch.heig.dai.lab.fileio;
 
 import java.io.File;
+import java.nio.charset.Charset;
 
-// *** TODO: Change this to import your own package ***
-import ch.heig.dai.lab.fileio.jehrensb.*;
+import ch.heig.dai.lab.fileio.axelrochat.*;
 
 public class Main {
-    // *** TODO: Change this to your own name ***
-    private static final String newName = "Jean-Claude Van Damme";
+    private static final String newName = "Axel Rochat";
 
     /**
      * Main method to transform files in a folder.
@@ -31,11 +30,33 @@ public class Main {
         String folder = args[0];
         int wordsPerLine = Integer.parseInt(args[1]);
         System.out.println("Application started, reading folder " + folder + "...");
-        // TODO: implement the main method here
+
+        FileExplorer fileExplorer = new FileExplorer(folder);  
+        EncodingSelector encodingSelector = new EncodingSelector();  
+        FileReaderWriter fileReaderWriter = new FileReaderWriter();  
+        Transformer transformer = new Transformer(newName, wordsPerLine);
 
         while (true) {
             try {
-                // TODO: loop over all files
+                File inputFile = fileExplorer.getNewFile();
+                if (inputFile == null){
+                    System.out.println("No other file available.");
+                    break;
+                }
+
+                Charset fileEncoding = encodingSelector.getEncoding(inputFile);
+                if (fileEncoding == null){
+                    System.out.println("Unknown encoding, skipping this file : " + inputFile);
+                    continue;
+                }
+                String fileContent = fileReaderWriter.readFile(inputFile, fileEncoding);
+
+                fileContent = transformer.replaceChuck(fileContent);
+                fileContent = transformer.capitalizeWords(fileContent);
+                fileContent = transformer.wrapAndNumberLines(fileContent);
+
+                File outputFile = new File(inputFile.getAbsolutePath() + ".processed");
+                fileReaderWriter.writeFile(outputFile, fileContent, Charset.forName("UTF-8"));
 
             } catch (Exception e) {
                 System.out.println("Exception: " + e);
