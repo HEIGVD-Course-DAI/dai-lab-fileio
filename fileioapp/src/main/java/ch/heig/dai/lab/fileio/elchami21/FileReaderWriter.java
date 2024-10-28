@@ -12,10 +12,27 @@ public class FileReaderWriter {
      * @return the content of the file as a String, or null if an error occurred.
      */
     public String readFile(File file, Charset encoding) {
-        // TODO: Implement the method body here. 
-        // Use the ...Stream and ...Reader classes from the java.io package.
-        // Make sure to close the streams and readers at the end.
-        return null;
+        if (file == null || encoding == null) {
+            return null;
+        }
+
+        try (FileInputStream fis = new FileInputStream(file);
+             InputStreamReader isr = new InputStreamReader(fis, encoding);
+             BufferedReader reader = new BufferedReader(isr)) {
+            
+            StringBuilder content = new StringBuilder();
+            String line;
+            
+            while ((line = reader.readLine()) != null) {
+                content.append(line);
+                content.append(System.lineSeparator());
+            }
+            
+            return content.toString();
+            
+        } catch (IOException e) {
+            return null;
+        }
     }
 
     /**
@@ -26,9 +43,20 @@ public class FileReaderWriter {
      * @return true if the file was written successfully, false otherwise
      */
     public boolean writeFile(File file, String content, Charset encoding) {
-        // TODO: Implement the method body here. 
-        // Use the ...Stream and ...Reader classes from the java.io package.
-        // Make sure to flush the data and close the streams and readers at the end.
-        return false;
+        if (file == null || content == null || encoding == null) {
+            return false;
+        }
+
+        try (FileOutputStream fos = new FileOutputStream(file);
+             OutputStreamWriter osw = new OutputStreamWriter(fos, encoding);
+             BufferedWriter writer = new BufferedWriter(osw)) {
+            
+            writer.write(content);
+            writer.flush();
+            return true;
+            
+        } catch (IOException e) {
+            return false;
+        }
     }
 }

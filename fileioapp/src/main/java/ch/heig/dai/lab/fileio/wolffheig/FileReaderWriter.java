@@ -12,10 +12,26 @@ public class FileReaderWriter {
      * @return the content of the file as a String, or null if an error occurred.
      */
     public String readFile(File file, Charset encoding) {
-        // TODO: Implement the method body here. 
-        // Use the ...Stream and ...Reader classes from the java.io package.
-        // Make sure to close the streams and readers at the end.
-        return null;
+
+        StringBuilder content = new StringBuilder();
+
+        // Use try-with-resources to automatically close the resources
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), encoding))) {
+            String line;
+            // Read the file line by line
+            while ((line = reader.readLine()) != null) {
+                content.append(line).append(System.lineSeparator());
+            }
+
+            return content.toString();
+
+        } catch (IOException e) {
+            // Handle the exception and return null if an error occurs
+            System.out.println("Exception: " + e);
+
+            return null;
+        }
+
     }
 
     /**
@@ -26,9 +42,21 @@ public class FileReaderWriter {
      * @return true if the file was written successfully, false otherwise
      */
     public boolean writeFile(File file, String content, Charset encoding) {
-        // TODO: Implement the method body here. 
-        // Use the ...Stream and ...Reader classes from the java.io package.
-        // Make sure to flush the data and close the streams and readers at the end.
-        return false;
+
+        // Use try-with-resources to automatically close the resources
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), encoding))) {
+            // Write the content to the file
+            writer.write(content);
+            writer.flush(); // Ensure all buffered data is written to the file directly
+
+            return true;
+
+        } catch (IOException e) {
+            // Handle the exception and return false if an error occurs
+            System.out.println("Exception: " + e);
+
+            return false;
+        }
+
     }
 }

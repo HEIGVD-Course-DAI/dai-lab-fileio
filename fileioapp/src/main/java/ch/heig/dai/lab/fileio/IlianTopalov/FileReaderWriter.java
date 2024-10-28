@@ -15,7 +15,32 @@ public class FileReaderWriter {
         // TODO: Implement the method body here. 
         // Use the ...Stream and ...Reader classes from the java.io package.
         // Make sure to close the streams and readers at the end.
-        return null;
+        try {
+            var reader = new BufferedReader(
+                        new InputStreamReader(
+                            new FileInputStream(
+                                    file.getPath()
+                            ), encoding
+                        )
+            );
+
+            // Create StringBuilder in order not to create new strings for each iteration
+            StringBuilder output = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                output.append(line).append(System.lineSeparator());
+            }
+
+            // Remove the line break at the end of the file
+            output.deleteCharAt(output.length() - 1);
+            reader.close();
+
+            return output.toString();
+
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
     }
 
     /**
@@ -29,6 +54,23 @@ public class FileReaderWriter {
         // TODO: Implement the method body here. 
         // Use the ...Stream and ...Reader classes from the java.io package.
         // Make sure to flush the data and close the streams and readers at the end.
-        return false;
+
+        try {
+            var writer = new BufferedWriter(
+                            new OutputStreamWriter(
+                                new FileOutputStream(
+                                    file.getPath()
+                                ), encoding
+                            )
+            );
+
+            writer.write(content);
+            writer.close();  // Flush and close stream writer
+
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
+        return true;
     }
 }

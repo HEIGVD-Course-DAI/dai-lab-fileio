@@ -24,6 +24,10 @@ public class Transformer {
      */
     public String replaceChuck(String source) {
         // TODO: Implement the method body here.
+        if(source != null && !source.isEmpty()){
+            // replace all occurences of "Chuck Norris" with newName
+            return source.replaceAll("Chuck Norris", newName);
+        }
         return "";
     }
 
@@ -34,6 +38,24 @@ public class Transformer {
      */
     public String capitalizeWords(String source) {
         // TODO: Implement the method body here.
+        // capitalize the first letter of each word in the string
+        if(source != null && !source.isEmpty()){
+            StringBuilder sbuilder = new StringBuilder();
+            String[] words = source.split(" ");
+
+            for (String word : words){
+                if (!word.isEmpty()){
+                    sbuilder.append(Character.toUpperCase(word.charAt(0)))
+                            .append(word.substring(1));
+                }
+                if (!word.equals(words[words.length - 1])){
+                    sbuilder.append(" ");
+                }
+            }
+
+            return sbuilder.toString();
+        }
+
         return "";
     }
 
@@ -46,6 +68,34 @@ public class Transformer {
     public String wrapAndNumberLines(String source) {
         // TODO: Implement the method body here.
         // Use the StringBuilder class to build the result string.
-        return "";
+        if (source == null || source.isEmpty() || numWordsPerLine < 1) {
+            System.out.println("The number of words per line must be greater than 0.");
+            return "";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        String[] words = source.trim().split("\\s+");
+        int wordCount = 0;
+        int lineCount = 1;
+
+        sb.append(lineCount).append(". ");
+
+        for (int i = 0; i < words.length; i++) {
+            sb.append(words[i]);
+            wordCount++;
+
+            if (wordCount == numWordsPerLine && i < words.length - 1) {
+                sb.append("\n").append(++lineCount).append(". ");
+                wordCount = 0;
+            } else if (i < words.length - 1) {
+                sb.append(" ");
+            }
+        }
+
+        if (wordCount > 0) {
+            sb.append("\n");
+        }
+
+        return sb.toString();
     }
 }   

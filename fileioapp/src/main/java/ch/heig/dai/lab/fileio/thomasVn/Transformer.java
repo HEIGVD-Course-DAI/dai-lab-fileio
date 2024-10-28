@@ -24,9 +24,10 @@ public class Transformer {
      */
     public String replaceChuck(String source) {
         // TODO: Implement the method body here.
-        return "";
-    }
 
+        //return the transformed string with the changed name if necessary
+        return (source.contains("Chuck Norris")) ? source.replace("Chuck Norris", newName) : "Ce texte ne contient pas le nom de Chuck N.";
+    }
     /**
      * Capitalize the first letter of each word in the string.
      * @param source the string to transform
@@ -34,7 +35,15 @@ public class Transformer {
      */
     public String capitalizeWords(String source) {
         // TODO: Implement the method body here.
-        return "";
+
+        if (source.isEmpty()) return source;
+
+        //Iterate tje string for changing the first letter of each word to uppercase
+        String[] words = source.split(" ");
+        for (int i = 0; i < words.length; ++i) {
+            words[i] = words[i].substring(0, 1).toUpperCase() + words[i].substring(1);
+        }
+        return String.join(" ", words);
     }
 
     /**
@@ -44,8 +53,35 @@ public class Transformer {
      * @return the transformed string
      */
     public String wrapAndNumberLines(String source) {
-        // TODO: Implement the method body here.
-        // Use the StringBuilder class to build the result string.
-        return "";
-    }
-}   
+        
+        String[] words = source.split(" ");
+        StringBuilder wrapped = new StringBuilder();
+
+        int countWord = 0;
+        int lineNumber = 1;
+
+        // Iterate through the words array divided by spaces
+        for (String word : words) {
+
+            if (countWord == 0) {
+                
+                // insert the line number at the beginning of each line
+                wrapped.append(lineNumber).append(". ");
+                lineNumber++;
+            }
+
+            wrapped.append(word);
+            countWord++;
+
+            if (countWord >= this.numWordsPerLine) {
+                wrapped.append("\n");
+                countWord = 0;
+
+            } else {
+                wrapped.append(word.equals(words[words.length - 1]) ? '\n' : " ");
+            }
+        }
+
+        return wrapped.toString();
+    }   
+}  

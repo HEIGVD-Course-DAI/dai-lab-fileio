@@ -19,9 +19,6 @@ public class FileReaderWriter {
            while ((line = reader.readLine()) != null) {
            sb.append(line).append(System.lineSeparator());
         }
-        reader.close();
-        isr.close();
-        fis.close();
         return sb.toString();
       }
       catch (IOException e) {
@@ -43,9 +40,7 @@ public class FileReaderWriter {
           OutputStreamWriter osr = new OutputStreamWriter(fos, encoding);
           BufferedWriter writer = new BufferedWriter(osr)){
             writer.write(content); 
-            writer.close();
-            osr.close();
-            fos.close();
+            writer.flush();
             return true;
       }catch (IOException e) {
         e.printStackTrace();

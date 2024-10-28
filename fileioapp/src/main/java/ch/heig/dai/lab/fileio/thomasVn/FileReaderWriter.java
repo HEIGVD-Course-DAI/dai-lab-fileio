@@ -15,7 +15,27 @@ public class FileReaderWriter {
         // TODO: Implement the method body here. 
         // Use the ...Stream and ...Reader classes from the java.io package.
         // Make sure to close the streams and readers at the end.
-        return null;
+
+        if (file == null || encoding == null) {
+            return null;
+        }
+
+        try {
+            var reader = new FileReader(file, encoding);
+            var bufferedReader = new BufferedReader(reader);
+            StringBuilder stringBuilder = new StringBuilder();
+
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line).append(System.lineSeparator());
+            }
+            bufferedReader.close();
+            return stringBuilder.toString();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -29,6 +49,24 @@ public class FileReaderWriter {
         // TODO: Implement the method body here. 
         // Use the ...Stream and ...Reader classes from the java.io package.
         // Make sure to flush the data and close the streams and readers at the end.
-        return false;
+
+        if (file == null || content == null || encoding == null) {
+            return false;
+        }
+
+        try {
+            OutputStream outputStream = new FileOutputStream(file);
+            Writer writer = new OutputStreamWriter(outputStream, encoding);
+            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+
+            bufferedWriter.write(content);
+            bufferedWriter.flush();
+            bufferedWriter.close();
+            return true;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
