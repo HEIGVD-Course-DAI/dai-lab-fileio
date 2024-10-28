@@ -1,6 +1,6 @@
 package ch.heig.dai.lab.fileio.VinchXVI;
 
-import java.io.File;
+import java.io.*;
 import java.nio.charset.Charset;
 
 public class FileReaderWriter {
@@ -15,7 +15,19 @@ public class FileReaderWriter {
         // TODO: Implement the method body here. 
         // Use the ...Stream and ...Reader classes from the java.io package.
         // Make sure to close the streams and readers at the end.
-        return null;
+        try(BufferedReader buffReader = new BufferedReader(
+                                        new InputStreamReader(
+                                        new FileInputStream(file),encoding))){
+            String reader;
+            StringBuilder message = new StringBuilder();
+            while((reader=buffReader.readLine())!=null){
+                message.append(reader);
+                message.append('\n');
+            }
+            return message.toString();
+        } catch (IOException e) {
+            return null;
+        }
     }
 
     /**
@@ -29,6 +41,15 @@ public class FileReaderWriter {
         // TODO: Implement the method body here. 
         // Use the ...Stream and ...Reader classes from the java.io package.
         // Make sure to flush the data and close the streams and readers at the end.
-        return false;
+        try(BufferedWriter buffWriter = new BufferedWriter(
+                                        new OutputStreamWriter(
+                                        new FileOutputStream(file), encoding))) {
+            buffWriter.write(content);
+            buffWriter.flush();
+            return true;
+
+        } catch (IOException e) {
+            return false;
+        }
     }
 }

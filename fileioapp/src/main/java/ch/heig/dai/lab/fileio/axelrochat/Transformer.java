@@ -23,9 +23,12 @@ public class Transformer {
      * @return the transformed string
      */
     public String replaceChuck(String source) {
-        // TODO: Implement the method body here.
-        return "";
+        if (source == null) {
+            return null;
+        }
+        return source.replace("Chuck Norris", newName);
     }
+    
 
     /**
      * Capitalize the first letter of each word in the string.
@@ -33,9 +36,24 @@ public class Transformer {
      * @return the transformed string
      */
     public String capitalizeWords(String source) {
-        // TODO: Implement the method body here.
-        return "";
+        if (source == null || source.isEmpty()) {
+            return source;
+        }
+        
+        String[] words = source.split("\\s+");
+        StringBuilder capitalized = new StringBuilder();
+    
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                capitalized.append(Character.toUpperCase(word.charAt(0)))
+                           .append(word.substring(1).toLowerCase())
+                           .append(" ");
+            }
+        }
+    
+        return capitalized.toString().trim();
     }
+    
 
     /**
      * Wrap the text so that there are at most numWordsPerLine words per line.
@@ -44,8 +62,31 @@ public class Transformer {
      * @return the transformed string
      */
     public String wrapAndNumberLines(String source) {
-        // TODO: Implement the method body here.
-        // Use the StringBuilder class to build the result string.
-        return "";
+        if (source == null || source.isEmpty()) {
+            return source;
+        }
+    
+        String[] words = source.split(" ");
+        StringBuilder result = new StringBuilder();
+        int wordCount = 0;
+        int lineNumber = 1;
+    
+        result.append(lineNumber).append(". ");
+    
+        for (String word : words) {
+            if (wordCount == numWordsPerLine) {
+                wordCount = 0;
+                lineNumber++;
+                result.append("\n").append(lineNumber).append(". ");
+            } else if (wordCount > 0) {
+                result.append(" ");
+            }
+    
+            result.append(word);
+            wordCount++;
+        }
+
+        return result.toString().trim() + "\n";
     }
+    
 }   

@@ -11,7 +11,7 @@ import java.util.Set;
 public class FileExplorerTests {
 
     @Test
-    @Disabled
+    //@Disabled
     public void getNewFilesTest() throws IOException {
         // Create a temporary directory under the default temp directory using java.io.File
 

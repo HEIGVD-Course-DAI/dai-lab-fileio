@@ -1,5 +1,7 @@
 package ch.heig.dai.lab.fileio.chomusukeworks;
 
+import java.util.List;
+
 public class Transformer {
 
 	private final String newName;
@@ -25,8 +27,7 @@ public class Transformer {
 	 * @return the transformed string
 	 */
 	public String replaceChuck(String source) {
-		// TODO: Implement the method body here.
-		return "";
+		return source.replaceAll("Chuck Norris", newName);
 	}
 
 	/**
@@ -36,8 +37,13 @@ public class Transformer {
 	 * @return the transformed string
 	 */
 	public String capitalizeWords(String source) {
-		// TODO: Implement the method body here.
-		return "";
+		String[] words = source.split(" ");
+
+		for (int i = 0; i < words.length; i++) {
+			words[i] = firstCharToUpperCase(words[i]);
+		}
+
+		return String.join(" ", words);
 	}
 
 	/**
@@ -48,8 +54,29 @@ public class Transformer {
 	 * @return the transformed string
 	 */
 	public String wrapAndNumberLines(String source) {
-		// TODO: Implement the method body here.
-		// Use the StringBuilder class to build the result string.
-		return "";
+		if (numWordsPerLine <= 0) return source;
+		List<String> words = List.of(source.split(" "));
+
+		var result = new StringBuilder();
+
+		// Creates the result one line at a time
+		int nbLines = words.size() / numWordsPerLine + (words.size() % numWordsPerLine == 0 ? 0 : 1);
+		for (int i = 0; i < nbLines; ++i) {
+			int first = i * numWordsPerLine;
+			int last = Math.min((i + 1) * numWordsPerLine, words.size());
+
+			String line = String.format("%d. %s\n",
+					i + 1,
+					String.join(" ", words.subList(first, last))
+			);
+
+			result.append(line);
+		}
+
+		return result.toString();
+	}
+
+	private String firstCharToUpperCase(String word) {
+		return word.substring(0, 1).toUpperCase() + word.substring(1);
 	}
 }   

@@ -18,6 +18,16 @@ public class EncodingSelector {
      */
     public Charset getEncoding(File file) {
         // TODO: implement the method body here
-        return null;
+
+        String[] parsedName = file.getName().split("\\.");
+        if (parsedName.length == 0) return null;
+        //System.out.println(parsedName[parsedName.length - 1]);
+        switch (parsedName[parsedName.length-1]) {
+            case "utf8": return Charset.forName("UTF-8");
+            case "txt": return Charset.forName("US-ASCII");
+            case "utf16be": return Charset.forName("UTF-16BE");
+            case "utf16le": return Charset.forName("UTF-16LE");
+            default: return null;
+        }
     }
 }

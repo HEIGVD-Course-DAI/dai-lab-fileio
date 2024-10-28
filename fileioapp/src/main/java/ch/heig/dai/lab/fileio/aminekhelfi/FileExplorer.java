@@ -26,6 +26,14 @@ public class FileExplorer {
      */
     public File getNewFile() {
         // TODO: implement the method body here
-        return null;
+        for(File myfile: folder.listFiles()) // pour chaque fichier du folder
+        {
+            if(!knownFiles.contains(myfile)) //on vérifie qu'il existe pas dans la table de hashage
+            { //si il exsite pas
+                knownFiles.add(myfile); //ajouter à la table de hashage
+                return myfile; //retourner ce fichier
+            }
+        }
+        return null; //aucun fichier n'a pas été retournée
     }
 }

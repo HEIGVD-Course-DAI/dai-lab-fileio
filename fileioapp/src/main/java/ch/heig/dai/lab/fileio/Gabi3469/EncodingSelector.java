@@ -18,6 +18,20 @@ public class EncodingSelector {
      */
     public Charset getEncoding(File file) {
         // TODO: implement the method body here
+        String fileName = file.getName();
+        String fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1);
+        switch (fileExtension) {
+            case "utf8":
+                return Charset.forName("UTF-8");
+            case "txt":
+                return Charset.forName("US-ASCII");
+            case "utf16be":
+                return Charset.forName("UTF-16BE");
+            case "utf16le":
+                return Charset.forName("UTF-16LE");
+            default:
+                break;
+        }
         return null;
     }
 }

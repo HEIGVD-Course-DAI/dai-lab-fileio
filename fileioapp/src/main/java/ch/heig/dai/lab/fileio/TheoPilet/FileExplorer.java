@@ -25,7 +25,16 @@ public class FileExplorer {
      * @return a new file, or null if there is no new file
      */
     public File getNewFile() {
-        // TODO: implement the method body here
+        File[] files = this.folder.listFiles();
+        if(files != null){
+            for (File f : files) {
+                if(!knownFiles.contains(f))
+                {
+                    knownFiles.add(f);
+                    return f;
+                }
+            }
+        }
         return null;
     }
 }

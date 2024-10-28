@@ -26,6 +26,14 @@ public class FileExplorer {
      */
     public File getNewFile() {
         // TODO: implement the method body here
+        File[] list = folder.listFiles();
+        for(int i = 0 ; i < list.length ; ++i){
+
+            if(!knownFiles.contains(list[i])){
+                knownFiles.add(list[i]);
+                return list[i] ;
+            }
+        }
         return null;
     }
 }

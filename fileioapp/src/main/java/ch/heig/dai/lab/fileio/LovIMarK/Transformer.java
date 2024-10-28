@@ -1,5 +1,9 @@
 package ch.heig.dai.lab.fileio.LovIMarK;
 
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+
 public class Transformer {
 
     private final String newName;
@@ -23,8 +27,11 @@ public class Transformer {
      * @return the transformed string
      */
     public String replaceChuck(String source) {
-        // TODO: Implement the method body here.
-        return "";
+        if(source.contains("Chuck Norris"))
+        {
+            return source.replace("Chuck Norris",newName);
+        }
+        return source;
     }
 
     /**
@@ -33,8 +40,11 @@ public class Transformer {
      * @return the transformed string
      */
     public String capitalizeWords(String source) {
-        // TODO: Implement the method body here.
-        return "";
+
+        return Stream.of(source.split(" "))
+                .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase())
+                .collect(Collectors.joining(" "));
+
     }
 
     /**
@@ -44,8 +54,41 @@ public class Transformer {
      * @return the transformed string
      */
     public String wrapAndNumberLines(String source) {
-        // TODO: Implement the method body here.
-        // Use the StringBuilder class to build the result string.
-        return "";
+        String[] words = source.split(" ");
+
+        // StringBuilder to build the result
+        StringBuilder wrappedText = new StringBuilder();
+
+        int wordCount = 0;
+        int lineNumber = 1;
+
+        // Append the first line number
+        wrappedText.append(lineNumber).append(". ");
+
+        // Loop through the array of words
+        for (String word : words) {
+            if (wordCount == numWordsPerLine) {
+                // If we reach the word limit per line, append a new line and line number
+                wrappedText.append("\n");
+                lineNumber++;
+                wrappedText.append(lineNumber).append(". ");
+                wordCount = 0;
+            }
+
+            // Append the word to the current line
+            wrappedText.append(word);
+            wordCount++;
+
+            // Only append a space if this is not the last word in the list
+            if (!(wordCount == numWordsPerLine || word.equals(words[words.length - 1]))) {
+                wrappedText.append(" ");
+            }
+        }
+
+        // Ensure the final string ends with a newline
+        wrappedText.append("\n");
+
+        // Convert StringBuilder to string and return the result
+        return wrappedText.toString();
     }
 }   

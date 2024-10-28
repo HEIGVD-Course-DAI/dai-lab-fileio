@@ -17,7 +17,16 @@ public class EncodingSelector {
      * @return the encoding of the file, or null if the extension is not recognized
      */
     public Charset getEncoding(File file) {
-        // TODO: implement the method body here
-        return null;
+        if (file == null) return null;
+
+        String extension = file.getName().substring(file.getName().lastIndexOf('.') + 1);
+
+        return switch (extension) {
+            case "utf8" -> Charset.forName("UTF-8");
+            case "txt" -> Charset.forName("US-ASCII");
+            case "utf16be" -> Charset.forName("UTF-16BE");
+            case "utf16le" -> Charset.forName("UTF-16LE");
+            default -> null;
+        };
     }
 }
