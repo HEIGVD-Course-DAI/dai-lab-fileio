@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Disabled;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TransformerTest {
+    @Test
+    @Disabled
     private final String newName = "Jean-Claude Van Damme";
     public final int numWordsPerLine = 3;
 
