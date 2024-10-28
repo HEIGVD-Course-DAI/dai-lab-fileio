@@ -62,12 +62,18 @@ public class Transformer {
         String[] words = source.split(" ");
 
         int wordCounter = 0;
+        int lineCounter = 1;
         StringBuilder wrap = new StringBuilder();
 
         for (String word : words) {
             if (wordCounter >= numWordsPerLine) {
                 wrap.append("\n"); // Start a new line after reaching numWordsPerLine words
                 wordCounter = 0;
+                ++lineCounter;
+            }
+
+            if (wordCounter == 0) {
+                wrap.append(lineCounter).append(". ");
             }
 
             if (wordCounter > 0) { // Separate words by spaces while numWordsPerLine not reached
