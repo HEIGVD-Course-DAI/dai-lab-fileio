@@ -54,20 +54,31 @@ public class Main {
 
                 // Determine the encoding of the file
                 Charset encoding = encodingSelector.getEncoding(file);
+                if (encoding == null) {
+                    System.out.println("File " + file.getName() + " has an unknown encoding.");
+                    continue;
+                }
 
                 // Read the file with the FileReaderWriter
                 String content = fileReaderWriter.readFile(file, encoding);
+                if (content == null) {
+                    System.out.println("File " + file.getName() + " could not be read.");
+                    continue;
+                }
 
                 // Transform the content with the Transformer
                 String transformedContent = transformer.replaceChuck(content);
                 transformedContent = transformer.capitalizeWords(transformedContent);
                 transformedContent = transformer.wrapAndNumberLines(transformedContent);
+                if (transformedContent == null) {
+                    System.out.println("File " + file.getName() + " could not be transformed.");
+                    continue;
+                }
 
                 // Write the result with the FileReaderWriter
                 String resultFileName = file.getName() + ".processed";
                 fileReaderWriter.writeFile(new File(folder, resultFileName), transformedContent,
                         Charset.forName("UTF-8"));
-
                 System.out.println("File processed: " + file.getName());
             } catch (Exception e) {
                 System.out.println("Exception: " + e);
