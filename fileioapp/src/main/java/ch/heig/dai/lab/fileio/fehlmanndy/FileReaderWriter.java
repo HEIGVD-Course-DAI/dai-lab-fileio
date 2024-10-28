@@ -1,9 +1,7 @@
-package ch.heig.dai.lab.fileio.FehlmannDy;
+package ch.heig.dai.lab.fileio.fehlmanndy;
 
-import java.io.BufferedReader;
-import java.io.*;
+import java.io.File;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 
 public class FileReaderWriter {
 
@@ -17,24 +15,7 @@ public class FileReaderWriter {
         // TODO: Implement the method body here. 
         // Use the ...Stream and ...Reader classes from the java.io package.
         // Make sure to close the streams and readers at the end.
-        try {
-            var reader = new BufferedReader(
-                    new InputStreamReader(
-                            new FileInputStream(file), encoding
-                    )
-            );
-
-            StringBuilder reading = new StringBuilder();
-
-            while ((reader.readLine()) != null) {
-                reading.append(reader.readLine());
-            }
-
-            reader.close();
-            return reading.toString();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return null;
     }
 
     /**
@@ -48,17 +29,6 @@ public class FileReaderWriter {
         // TODO: Implement the method body here. 
         // Use the ...Stream and ...Reader classes from the java.io package.
         // Make sure to flush the data and close the streams and readers at the end.
-        try (var writer = new BufferedWriter(
-                new OutputStreamWriter(
-                        new FileOutputStream(file), encoding)
-        )
-        ) {
-            writer.write(content);
-            writer.close();
-            return true;
-
-        } catch (IOException e) {
-            return false;
-        }
+        return false;
     }
 }

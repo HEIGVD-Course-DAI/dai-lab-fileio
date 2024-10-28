@@ -24,7 +24,10 @@ public class Transformer {
      */
     public String replaceChuck(String source) {
         // TODO: Implement the method body here.
-        return "";
+        while (source.contains("Chuck Norris")){
+            source = source.replace("Chuck Norris", this.newName);
+        }
+        return source;
     }
 
     /**
@@ -34,7 +37,12 @@ public class Transformer {
      */
     public String capitalizeWords(String source) {
         // TODO: Implement the method body here.
-        return "";
+        String[] words = source.split(" ");
+        for (int i = 1; i < words.length; i++) {
+            words[i] = words[i].substring(0, 1).toUpperCase() + words[i].substring(1);
+        }
+        source = String.join(" ", words);
+        return source;
     }
 
     /**
@@ -46,6 +54,21 @@ public class Transformer {
     public String wrapAndNumberLines(String source) {
         // TODO: Implement the method body here.
         // Use the StringBuilder class to build the result string.
-        return "";
+        String[] words = source.split(" ");
+        source = "";
+        int ligne = 1;
+
+        for (int i = 0; i < words.length; i++) {
+            if(i%this.numWordsPerLine == 0){
+                if(i!=0){
+                    source += "\n";
+                }
+                source += ligne +".";
+                ++ligne;
+            }
+            source += " "+ words[i];
+        }
+        source +="\n";
+        return source;
     }
 }   

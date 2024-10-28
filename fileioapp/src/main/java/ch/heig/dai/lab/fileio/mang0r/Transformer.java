@@ -1,5 +1,8 @@
 package ch.heig.dai.lab.fileio.mang0r;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public class Transformer {
 
     private final String newName;
@@ -24,7 +27,7 @@ public class Transformer {
      */
     public String replaceChuck(String source) {
         // TODO: Implement the method body here.
-        return "";
+        return source.replaceAll("Chuck Norris", newName);
     }
 
     /**
@@ -34,7 +37,9 @@ public class Transformer {
      */
     public String capitalizeWords(String source) {
         // TODO: Implement the method body here.
-        return "";
+        return Arrays.stream(source.split(" "))
+            .map((String s) ->{ return Character.toUpperCase(s.charAt(0)) + s.substring(1); })
+            .collect(Collectors.joining(" "));
     }
 
     /**
@@ -46,6 +51,19 @@ public class Transformer {
     public String wrapAndNumberLines(String source) {
         // TODO: Implement the method body here.
         // Use the StringBuilder class to build the result string.
-        return "";
+        var sb = new StringBuilder();
+
+        for (String l : source.split("\\r?\\n")) {
+            int i = 0;
+            for (String w : l.split(" ")) {
+                if (i % numWordsPerLine == 0) {
+                    sb.append(i / numWordsPerLine + 1).append(". ");
+                }
+                sb.append(w).append((++i % numWordsPerLine == 0) ? "\n" : " ");
+            }
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        sb.append("\n");
+        return sb.toString();
     }
 }   

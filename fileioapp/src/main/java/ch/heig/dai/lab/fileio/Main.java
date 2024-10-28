@@ -1,7 +1,6 @@
 package ch.heig.dai.lab.fileio;
 
 import java.io.File;
-import java.nio.charset.Charset;
 
 // *** TODO: Change this to import your own package ***
 import ch.heig.dai.lab.fileio.joelCarman.*;
@@ -9,6 +8,7 @@ import ch.heig.dai.lab.fileio.joelCarman.*;
 public class Main {
     // *** TODO: Change this to your own name ***
     private static final String newName = "Joel Carman";
+
 
     /**
      * Main method to transform files in a folder.
@@ -59,8 +59,6 @@ public class Main {
             }
         }
     }
-
-
     private static String destinationFilepath(File file) {
         return makeDestinationDirectory(file) + "/" + file.getName() + ".processed";
     }
