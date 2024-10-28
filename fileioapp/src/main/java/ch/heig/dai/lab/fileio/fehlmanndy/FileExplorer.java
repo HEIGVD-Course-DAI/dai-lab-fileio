@@ -1,4 +1,4 @@
-package ch.heig.dai.lab.fileio.fehlmanndy;
+package ch.heig.dai.lab.fileio.FehlmannDy;
 
 import java.io.File;
 import java.util.HashSet;
@@ -26,6 +26,13 @@ public class FileExplorer {
      */
     public File getNewFile() {
         // TODO: implement the method body here
+        File file[] = folder.listFiles();
+        for (int i = 0; i < file.length; i++) {
+            if (file[i].isFile() && !knownFiles.contains(file[i])) {
+                knownFiles.add(file[i]);
+                return file[i];
+            }
+        }
         return null;
     }
 }
