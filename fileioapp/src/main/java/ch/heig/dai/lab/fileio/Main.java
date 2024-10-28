@@ -62,7 +62,7 @@ public class Main {
                 Charset encoding =encodingSelector.getEncoding(input);
                 if(encoding==null)
                 {
-                    System.out.println("Encoding not found for: "+input.getName());
+                    System.out.println("Encodage non trouvé: "+input.getName());
                     continue;
                 }
 
@@ -70,7 +70,7 @@ public class Main {
                 String content=fileReaderWriter.readFile(input,encoding);
                 if(content==null)
                 {
-                    System.out.println("Erreur reading file: "+input.getName());
+                    System.out.println("Erreur lecture fichier: "+input.getName());
                     continue;
                 }
 
@@ -84,10 +84,10 @@ public class Main {
 
                 if(fileReaderWriter.writeFile(output,contentTransformed,encoding)) //écriture dans fichier si la fonction retourne false il y a une erreur.
                 {
-                    System.out.println("Processed file: "+output.getName());
+                    System.out.println("Fichier traité: "+output.getName());
                 }
                 else{
-                    System.out.println("Error writing file: "+output.getName());
+                    System.out.println("Erreur écriture fichier: "+output.getName());
                 }
 
             } catch (Exception e) {
