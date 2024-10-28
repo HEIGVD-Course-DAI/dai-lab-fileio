@@ -1,16 +1,21 @@
-package ch.heig.dai.lab.fileio.hliosone;
+// TODO change this to your own package instead of jehrensb ***
+package ch.heig.dai.lab.fileio.fehlmanndy;
 
-import org.junit.jupiter.api.Test;
+import ch.heig.dai.lab.fileio.fehlmanndy.EncodingSelector;
 import org.junit.jupiter.api.Disabled;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class EncodingSelectorTest {
 
-    private final EncodingSelector selector = new EncodingSelector();
+    private final ch.heig.dai.lab.fileio.fehlmanndy.EncodingSelector selector = new EncodingSelector();
 
     @Test
+    @Disabled
     public void encodingTest() {
         assertEquals (StandardCharsets.UTF_8, selector.getEncoding(new File("file1.utf8")));
         assertEquals (StandardCharsets.US_ASCII, selector.getEncoding(new File("file1.txt")));
@@ -19,12 +24,14 @@ public class EncodingSelectorTest {
     }
 
     @Test
+    @Disabled
     public void nullTest() {
         assertEquals (null, selector.getEncoding(new File("file1.utf")));
         assertEquals (null, selector.getEncoding(new File("file1")));
     }
 
     @Test
+    @Disabled
     public void dotsTests() {
         assertEquals (StandardCharsets.UTF_8, selector.getEncoding(new File("file1.txt.utf8")));
         assertEquals (StandardCharsets.US_ASCII, selector.getEncoding(new File("file1.utf8.txt")));

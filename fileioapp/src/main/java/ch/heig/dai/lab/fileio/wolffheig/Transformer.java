@@ -23,8 +23,7 @@ public class Transformer {
      * @return the transformed string
      */
     public String replaceChuck(String source) {
-        // TODO: Implement the method body here.
-        return "";
+        return source.replace("Chuck Norris", this.newName);
     }
 
     /**
@@ -33,8 +32,15 @@ public class Transformer {
      * @return the transformed string
      */
     public String capitalizeWords(String source) {
-        // TODO: Implement the method body here.
-        return "";
+        // Split the string by one or more whitespace characters
+        String[] words = source.split("\\s+");
+
+        // Capitalize only the first letter of each word
+        for (int i = 0; i < words.length; i++) {
+            words[i] = words[i].substring(0, 1).toUpperCase() + words[i].substring(1);
+        }
+
+        return String.join(" ", words);
     }
 
     /**
@@ -44,8 +50,36 @@ public class Transformer {
      * @return the transformed string
      */
     public String wrapAndNumberLines(String source) {
-        // TODO: Implement the method body here.
-        // Use the StringBuilder class to build the result string.
-        return "";
+        // Split the input text into words
+        String[] words = source.split("\\s+"); // Split by one or more spaces
+        StringBuilder result = new StringBuilder();
+
+        int wordCount = 0;
+        int lineNumber = 1;
+
+        // Iterate over the words and group them into lines of numWordsPerLine
+        for (String word : words) {
+            if (wordCount == 0) {
+                // Start a new line with the line number
+                result.append(lineNumber).append(". ");
+                lineNumber++;
+            }
+
+            result.append(word);
+            wordCount++;
+
+            if (wordCount >= this.numWordsPerLine) {
+                // Wrap to a new line after numWordsPerLine words
+                result.append("\n");
+                wordCount = 0;
+            } else if (!word.equals(words[words.length - 1])) {
+                result.append(" ");
+            } else {
+                result.append("\n");
+            }
+        }
+
+        return result.toString();
     }
-}   
+
+}

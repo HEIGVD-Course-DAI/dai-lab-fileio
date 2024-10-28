@@ -9,7 +9,7 @@ import ch.heig.dai.lab.fileio.ismaelgiovannetti.FileReaderWriter;
 import ch.heig.dai.lab.fileio.ismaelgiovannetti.Transformer;
 
 public class Main {
-    private static final String newName = "Ismael";
+    private static final String newName = "Ismael Giovannetti";
 
     /**
      * Main method to transform files in a folder.

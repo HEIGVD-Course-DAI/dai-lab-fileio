@@ -1,16 +1,20 @@
 // TODO change this to your own package instead of jehrensb ***
-package ch.heig.dai.lab.fileio.leirth;
+package ch.heig.dai.lab.fileio.fehlmanndy;
 
-import org.junit.jupiter.api.Test;
+import ch.heig.dai.lab.fileio.fehlmanndy.FileExplorer;
 import org.junit.jupiter.api.Disabled;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class FileExplorerTests {
 
     @Test
+    @Disabled
     public void getNewFilesTest() throws IOException {
         // Create a temporary directory under the default temp directory using java.io.File
 
@@ -19,7 +23,7 @@ public class FileExplorerTests {
         tempDir.deleteOnExit();
 
         // Create a FileExplorer for that directory
-        FileExplorer explorer = new FileExplorer(tempDir.toString());
+        ch.heig.dai.lab.fileio.fehlmanndy.FileExplorer explorer = new FileExplorer(tempDir.toString());
 
         // Check that no files are found
         assertEquals(explorer.getNewFile(), null);

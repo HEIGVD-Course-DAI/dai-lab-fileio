@@ -1,6 +1,6 @@
-package ch.heig.dai.lab.fileio.Romain720;
+package ch.heig.dai.lab.fileio.fehlmanndy;
 
-import java.io.*;
+import java.io.File;
 import java.nio.charset.Charset;
 
 public class FileReaderWriter {
@@ -15,25 +15,7 @@ public class FileReaderWriter {
         // TODO: Implement the method body here. 
         // Use the ...Stream and ...Reader classes from the java.io package.
         // Make sure to close the streams and readers at the end.
-
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), encoding))) {
-
-            StringBuilder content = new StringBuilder();
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-
-                content.append(line).append(System.lineSeparator());
-
-            }
-
-            return content.toString();
-
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return null;
     }
 
     /**
@@ -47,19 +29,6 @@ public class FileReaderWriter {
         // TODO: Implement the method body here. 
         // Use the ...Stream and ...Reader classes from the java.io package.
         // Make sure to flush the data and close the streams and readers at the end.
-
-        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), encoding))) {
-
-            writer.write(content);
-            writer.flush();
-
-            return true;
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         return false;
-
     }
 }
