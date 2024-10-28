@@ -75,9 +75,9 @@ public class Main {
                 }
 
 
-                String contentTransformed= transformer.replaceChuck(content);
-                contentTransformed=transformer.capitalizeWords(contentTransformed);
-                contentTransformed=transformer.wrapAndNumberLines(contentTransformed);
+                String contentTransformed= transformer.replaceChuck(content); //faire le remplace de Chuck Norris
+                contentTransformed=transformer.capitalizeWords(contentTransformed); //mettre toute les 1ère lettres des mots en majuscule
+                contentTransformed=transformer.wrapAndNumberLines(contentTransformed); //mettre la phrase en ligne
 
                 //création fichier sorti
                 File output=new File(input.getPath()+".processed"); //utiliser le chemin du fichier entrée pour la création du fichier de sorti en ajoutant le .process
