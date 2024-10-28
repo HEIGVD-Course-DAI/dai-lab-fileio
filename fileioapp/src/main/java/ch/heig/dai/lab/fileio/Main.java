@@ -5,6 +5,7 @@ import java.nio.charset.Charset;
 
 import ch.heig.dai.lab.fileio.axelrochat.*;
 
+// DROPME
 public class Main {
     private static final String newName = "Axel Rochat";
 
