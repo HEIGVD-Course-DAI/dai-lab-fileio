@@ -23,8 +23,7 @@ public class Transformer {
      * @return the transformed string
      */
     public String replaceChuck(String source) {
-        // TODO: Implement the method body here.
-        return "";
+        return source.replace("Chuck Norris", newName);
     }
 
     /**
@@ -33,8 +32,19 @@ public class Transformer {
      * @return the transformed string
      */
     public String capitalizeWords(String source) {
-        // TODO: Implement the method body here.
-        return "";
+
+        String[] words = source.split(" ");
+        StringBuilder result = new StringBuilder();
+
+        for (String word : words) {
+            result.append(word.substring(0,1).toUpperCase())
+                  .append(word.substring(1))
+                  .append(" ");
+        }
+
+        result.deleteCharAt(result.length()-1); // deletes the last space
+
+        return result.toString();
     }
 
     /**
@@ -44,8 +54,29 @@ public class Transformer {
      * @return the transformed string
      */
     public String wrapAndNumberLines(String source) {
-        // TODO: Implement the method body here.
-        // Use the StringBuilder class to build the result string.
-        return "";
+
+        String[] words = source.split(" ");
+        StringBuilder result = new StringBuilder();
+        int nbLine = 1;
+        int currentNbWords = 0;
+
+        result.append(nbLine++ + ". ");
+
+        for(String word : words){
+
+            if(currentNbWords == numWordsPerLine){
+                result.setLength(result.length() - 1); // deletes the last space of each line
+                result.append("\n" + nbLine + ". ");
+                currentNbWords = 0;
+                nbLine++;
+            }
+
+            result.append(word + " ");
+            currentNbWords++;
+        }
+
+        result.deleteCharAt(result.length()-1); // deletes the last space
+
+        return result.append("\n").toString();
     }
 }   
