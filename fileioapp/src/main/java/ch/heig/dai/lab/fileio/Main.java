@@ -50,7 +50,7 @@ public class Main {
                     break;
                 }
 
-                if (!file.getName().endsWith(suffix)) {
+                if (file.getName().endsWith(suffix)) {
                     continue;
                 }
 
@@ -58,16 +58,15 @@ public class Main {
                 Charset encoding = encodingSelector.getEncoding(file);
 
                 // Get file content
-                System.out.println("Reading file " + file.getName());  // LOG
                 String content = fileReaderWriter.readFile(file, encoding);
 
                 // Transform content
-                transformer.replaceChuck(content);
-                transformer.capitalizeWords(content);
-                transformer.wrapAndNumberLines(content);
+                content = transformer.replaceChuck(content);
+                content = transformer.capitalizeWords(content);
+                content = transformer.wrapAndNumberLines(content);
 
                 // Output content
-                String outputFileName = file.getName() + suffix;
+                String outputFileName = file.getAbsolutePath() + suffix;
                 File outputFile = new File(outputFileName);
                 fileReaderWriter.writeFile(outputFile, content, encoding);
 
