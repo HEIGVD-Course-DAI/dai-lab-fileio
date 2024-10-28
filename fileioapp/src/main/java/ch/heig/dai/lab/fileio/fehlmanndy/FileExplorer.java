@@ -1,4 +1,4 @@
-package ch.heig.dai.lab.fileio.fehlmanndy;
+package ch.heig.dai.lab.fileio.FehlmannDy;
 
 import java.io.File;
 import java.util.HashSet;

@@ -1,4 +1,4 @@
-package ch.heig.dai.lab.fileio.fehlmanndy;
+package ch.heig.dai.lab.fileio.FehlmannDy;
 
 public class Transformer {
 

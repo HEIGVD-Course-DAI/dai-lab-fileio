@@ -1,7 +1,7 @@
 // TODO change this to your own package instead of jehrensb ***
-package ch.heig.dai.lab.fileio.fehlmanndy;
+package ch.heig.dai.lab.fileio.FehlmannDy;
 
-import ch.heig.dai.lab.fileio.fehlmanndy.EncodingSelector;
+import ch.heig.dai.lab.fileio.FehlmannDy.EncodingSelector;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class EncodingSelectorTest {
 
-    private final ch.heig.dai.lab.fileio.fehlmanndy.EncodingSelector selector = new EncodingSelector();
+    private final ch.heig.dai.lab.fileio.FehlmannDy.EncodingSelector selector = new EncodingSelector();
 
     @Test
     @Disabled

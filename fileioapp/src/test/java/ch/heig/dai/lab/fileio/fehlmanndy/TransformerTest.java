@@ -1,7 +1,7 @@
 // TODO change this to your own package instead of jehrensb ***
-package ch.heig.dai.lab.fileio.fehlmanndy;
+package ch.heig.dai.lab.fileio.FehlmannDy;
 
-import ch.heig.dai.lab.fileio.fehlmanndy.Transformer;
+import ch.heig.dai.lab.fileio.FehlmannDy.Transformer;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +11,7 @@ public class TransformerTest {
     private final String newName = "Jean-Claude Van Damme";
     public final int numWordsPerLine = 3;
 
-    private final ch.heig.dai.lab.fileio.fehlmanndy.Transformer transformer = new Transformer(newName, numWordsPerLine);
+    private final ch.heig.dai.lab.fileio.FehlmannDy.Transformer transformer = new Transformer(newName, numWordsPerLine);
         private String testString = "Chuck Norris s’est fait flasher à 280km/h sur l’autoroute. A pied.";
 
     @Test
