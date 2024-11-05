@@ -24,7 +24,7 @@ $(CHECKFILE):
 	@echo $(CHECKSTRING) | iconv -f UTF-8 -t UTF-8 - > $(JOKES)/$(CHECKFILE)
 
 $(JAR): $(SRCDIR)/Main.java
-	cd fileioapp && mvn package
+	cd fileioapp && mvn package -Dmaven.test.skip
 
 run: $(JAR) $(JOKES) $(TESTFILES)
 	timeout 5 java -jar $(JAR) $(JOKES) $(WORDSPERLINE) || true
@@ -36,5 +36,5 @@ check: run $(CHECKFILE) $(TESTFILES)
 	done
 
 clean:
-	rm -rf $(JOKES)
+	rm -rf $(JOKES) $(JAR)
 
