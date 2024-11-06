@@ -65,7 +65,6 @@ public class Transformer {
         }
 
         String[] words = source.split(" ");
-
         StringBuilder result = new StringBuilder();
         int lineCount = 1;
         int wordCount = 0;
