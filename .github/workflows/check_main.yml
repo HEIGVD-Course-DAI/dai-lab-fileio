@@ -30,4 +30,4 @@ jobs:
         cache: maven
     - name: Check Main.java
       run: |
-        make -f .github/workflows/Makefile_check_main
+        make -f .github/workflows/Makefile_check_main run check

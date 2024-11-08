@@ -1,3 +1,6 @@
+# Run this makefile with make run check
+# Running it only with make will swallow any exceptions raised by the Main app
+
 SRCDIR=fileioapp/src/main/java/ch/heig/dai/lab/fileio/
 JAR=fileioapp/target/fileioapp-1.0.jar
 JOKES=jokes
