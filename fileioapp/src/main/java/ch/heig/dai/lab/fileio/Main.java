@@ -1,27 +1,14 @@
 package ch.heig.dai.lab.fileio;
 
 import java.io.File;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
-// *** TODO: Change this to import your own package ***
-import ch.heig.dai.lab.fileio.jehrensb.*;
+import ch.heig.dai.lab.fileio.elchami21.*;
 
 public class Main {
-    // *** TODO: Change this to your own name ***
-    private static final String newName = "Jean-Claude Van Damme";
+    private static final String elchami21 = "Jean-Claude Van Damme";
 
-    /**
-     * Main method to transform files in a folder.
-     * Create the necessary objects (FileExplorer, EncodingSelector, FileReaderWriter, Transformer).
-     * In an infinite loop, get a new file from the FileExplorer, determine its encoding with the EncodingSelector,
-     * read the file with the FileReaderWriter, transform the content with the Transformer, write the result with the
-     * FileReaderWriter.
-     * 
-     * Result files are written in the same folder as the input files, and encoded with UTF8.
-     *
-     * File name of the result file:
-     * an input file "myfile.utf16le" will be written as "myfile.utf16le.processed",
-     * i.e., with a suffixe ".processed".
-     */
     public static void main(String[] args) {
         // Read command line arguments
         if (args.length != 2 || !new File(args[0]).isDirectory()) {
@@ -31,11 +18,52 @@ public class Main {
         String folder = args[0];
         int wordsPerLine = Integer.parseInt(args[1]);
         System.out.println("Application started, reading folder " + folder + "...");
-        // TODO: implement the main method here
+
+        // Create necessary objects
+        FileExplorer explorer = new FileExplorer(folder);
+        EncodingSelector selector = new EncodingSelector();
+        FileReaderWriter fileIO = new FileReaderWriter();
+        Transformer transformer = new Transformer(elchami21, wordsPerLine);
 
         while (true) {
             try {
-                // TODO: loop over all files
+                // Get next file to process
+                File inputFile = explorer.getNewFile();
+                if (inputFile == null) {
+                    // No more files to process, wait a bit before checking again
+                    Thread.sleep(1000);
+                    continue;
+                }
+
+                // Get the encoding of the input file
+                Charset encoding = selector.getEncoding(inputFile);
+                if (encoding == null) {
+                    System.out.println("Unknown encoding for file: " + inputFile.getName());
+                    continue;
+                }
+
+                // Read the file content
+                String content = fileIO.readFile(inputFile, encoding);
+                if (content == null) {
+                    System.out.println("Failed to read file: " + inputFile.getName());
+                    continue;
+                }
+
+                // Transform the content
+                String transformedContent = transformer.replaceChuck(content);
+                transformedContent = transformer.capitalizeWords(transformedContent);
+                transformedContent = transformer.wrapAndNumberLines(transformedContent);
+
+                // Create output file with .processed suffix
+                File outputFile = new File(inputFile.getPath() + ".processed");
+
+                // Write the transformed content with UTF-8 encoding
+                boolean success = fileIO.writeFile(outputFile, transformedContent, StandardCharsets.UTF_8);
+                if (success) {
+                    System.out.println("Successfully processed: " + inputFile.getName());
+                } else {
+                    System.out.println("Failed to write file: " + outputFile.getName());
+                }
 
             } catch (Exception e) {
                 System.out.println("Exception: " + e);
