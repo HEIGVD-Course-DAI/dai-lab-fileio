@@ -2,8 +2,10 @@ package ch.heig.dai.lab.fileio;
 
 import java.io.File;
 
-// *** TODO: Change this to import your own package ***
-import ch.heig.dai.lab.fileio.jehrensb.*;
+import ch.heig.dai.lab.fileio._9r55hs.FileReaderWriter;
+import ch.heig.dai.lab.fileio.mang0r.EncodingSelector;
+import ch.heig.dai.lab.fileio.mang0r.FileExplorer;
+import ch.heig.dai.lab.fileio.mang0r.Transformer;
 
 public class Main {
     // *** TODO: Change this to your own name ***
@@ -33,9 +35,30 @@ public class Main {
         System.out.println("Application started, reading folder " + folder + "...");
         // TODO: implement the main method here
 
-        while (true) {
+        EncodingSelector selector = new EncodingSelector();
+        FileReaderWriter frw = new FileReaderWriter();
+        Transformer transformer = new Transformer(newName, wordsPerLine);
+        
+        FileExplorer explorer;
+        try {
+            explorer = new FileExplorer(folder);
+        } catch (Exception e) {
+            System.err.println("Folder not found");
+            return; // Exit program
+        }
+
+        File f;
+        while ((f = explorer.getNewFile()) != null) {
             try {
                 // TODO: loop over all files
+                // skip already processed files
+                if ((f.getName().substring(f.getName().lastIndexOf('.'))).equals("processed")) break;
+                
+                File of = new File(f.getAbsolutePath() + ".processed");
+                frw.writeFile(
+                    of,
+                    transformer.replaceChuck(frw.readFile(f, selector.getEncoding(f))), 
+                        selector.getEncoding(f));
 
             } catch (Exception e) {
                 System.out.println("Exception: " + e);
