@@ -26,7 +26,7 @@ public class FileReaderWriter {
         } catch (IOException ioe) {
             throw new RuntimeException(ioe);
         }
-        return null;
+        return contents;
     }
 
     /**
