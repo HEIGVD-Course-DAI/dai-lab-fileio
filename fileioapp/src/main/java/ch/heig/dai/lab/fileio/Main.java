@@ -1,13 +1,12 @@
 package ch.heig.dai.lab.fileio;
 
 import java.io.File;
+import java.nio.charset.Charset;
 
-// *** TODO: Change this to import your own package ***
-import ch.heig.dai.lab.fileio.jehrensb.*;
+import ch.heig.dai.lab.fileio.chomusukeworks.*;
 
 public class Main {
-    // *** TODO: Change this to your own name ***
-    private static final String newName = "Jean-Claude Van Damme";
+    private static final String newName = "Artur";
 
     /**
      * Main method to transform files in a folder.
@@ -15,9 +14,9 @@ public class Main {
      * In an infinite loop, get a new file from the FileExplorer, determine its encoding with the EncodingSelector,
      * read the file with the FileReaderWriter, transform the content with the Transformer, write the result with the
      * FileReaderWriter.
-     * 
+     * <p>
      * Result files are written in the same folder as the input files, and encoded with UTF8.
-     *
+     * <p>
      * File name of the result file:
      * an input file "myfile.utf16le" will be written as "myfile.utf16le.processed",
      * i.e., with a suffixe ".processed".
@@ -31,12 +30,32 @@ public class Main {
         String folder = args[0];
         int wordsPerLine = Integer.parseInt(args[1]);
         System.out.println("Application started, reading folder " + folder + "...");
-        // TODO: implement the main method here
 
+        FileExplorer fileExplorer = new FileExplorer(folder);
+        EncodingSelector encodingSelector = new EncodingSelector();
+        FileReaderWriter fileReaderWriter = new FileReaderWriter();
+        Transformer transformer = new Transformer(newName, wordsPerLine);
+
+        final String processedSuffix = ".processed";
         while (true) {
             try {
-                // TODO: loop over all files
+                // Fetch a new file from the folder
+                File file;
+                // Avoid taking processed files as input
+                do {
+                    file = fileExplorer.getNewFile();
+                } while (file != null && file.getName().endsWith(processedSuffix));
+                if (file == null) break;
 
+                Charset encoding = encodingSelector.getEncoding(file);
+                String contents = fileReaderWriter.readFile(file, encoding);
+
+                // Apply transform operations on the contents
+                contents = transformer.replaceChuck(contents);
+                contents = transformer.capitalizeWords(contents);
+                contents = transformer.wrapAndNumberLines(contents);
+
+                fileReaderWriter.writeFile(new File(folder, file.getName() + processedSuffix), contents, encoding);
             } catch (Exception e) {
                 System.out.println("Exception: " + e);
             }
